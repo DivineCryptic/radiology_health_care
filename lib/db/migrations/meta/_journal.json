@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1710495460028,
+      "tag": "0000_lush_black_bolt",
+      "breakpoints": true
+    }
+  ]
+}
