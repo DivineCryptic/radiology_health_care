@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "6afcf678-2854-44cb-9390-9310cbe746a4",
-  "prevId": "0727f7f8-2b7a-4ccc-82a9-21b29224af3e",
+  "id": "b82c9354-2912-41bd-b659-f44ce5f00ffd",
+  "prevId": "e837fb10-82c1-4bf7-a222-11d6eb6fa45f",
   "tables": {
     "session": {
       "name": "session",
@@ -109,6 +109,13 @@
           "notNull": true,
           "autoincrement": false
         },
+        "health_information_service": {
+          "name": "health_information_service",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
         "service_id": {
           "name": "service_id",
           "type": "varchar(256)",
@@ -129,6 +136,50 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "service_no": {
+          "name": "service_no",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "technician": {
+          "name": "technician",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "now()"
         }
       },
       "indexes": {},
@@ -206,6 +257,13 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -250,6 +308,13 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -274,6 +339,13 @@
           "notNull": true,
           "autoincrement": false
         },
+        "service_id": {
+          "name": "service_id",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
         "name": {
           "name": "name",
           "type": "varchar(256)",
@@ -281,8 +353,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "service_id": {
-          "name": "service_id",
+        "user_id": {
+          "name": "user_id",
           "type": "varchar(256)",
           "primaryKey": false,
           "notNull": true,
@@ -322,3 +394,4 @@
     "tables": {},
     "columns": {}
   }
+}

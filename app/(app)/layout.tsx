@@ -17,4 +17,3 @@ export default async function AppLayout({
 </div>
 <Toaster richColors />
 </main> )
-}

@@ -15,4 +15,3 @@
   "provider": "mysql-2",
   "orm": "drizzle",
   "auth": "lucia"
-}
