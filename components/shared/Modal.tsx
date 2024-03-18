@@ -18,11 +18,11 @@ export default function Modal({
 }) {
   return (
     <Dialog onOpenChange={setOpen} open={open}>
-      <DialogContent>
+      <DialogContent className="overflow-y-scroll max-w-[600px] max-h-[700px]">
         <DialogHeader className="px-5 pt-5">
           <DialogTitle>{title ?? "Modal"}</DialogTitle>
         </DialogHeader>
-        <div className="px-5 pb-5">{children}</div>
+        <div className="px-5 pb-5 ">{children}</div>
       </DialogContent>
     </Dialog>
   );
