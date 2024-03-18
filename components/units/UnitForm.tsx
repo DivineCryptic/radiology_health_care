@@ -144,7 +144,7 @@ const UnitForm = ({
           <SelectContent>
           {services?.map((service) => (
             <SelectItem key={service.id} value={service.id.toString()}>
-              {service.id}{/* TODO: Replace with a field from the service model */}
+              {service.name}{/* TODO: Replace with a field from the service model */}
             </SelectItem>
            ))}
           </SelectContent>
