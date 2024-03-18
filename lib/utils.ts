@@ -7,3 +7,11 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const nanoid = customAlphabet("abcdefghijklmnopqrstuvwxyz0123456789");
+
+
+export type Action = "create" | "update" | "delete";
+
+export type OptimisticAction<T> = {
+  action: Action;
+  data: T;
+};
