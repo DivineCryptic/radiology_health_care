@@ -19,11 +19,10 @@ import { useValidatedForm } from "@/hooks/useValidatedForm";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import React, { useState, useTransition } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { useForm } from "react-hook-form";
 import { useBackPath } from "../../../../../modules/shared/BackButton";
-import { createRankAction } from "@/server_actions/actions/ranks";
 import { DialogClose } from "@/components/ui/dialog";
 import { EmployeeData, Employeeform, formData } from "@/schema/employees";
 import { ServiceData } from "@/schema/services";
@@ -31,25 +30,18 @@ import { RankData } from "@/schema/ranks";
 import { UnitData } from "@/schema/units";
 import { Checkbox } from "@/components/ui/checkbox";
 import { createEmployeeAction } from "@/server_actions/actions/employee";
-
+import { getRanksByServiceId, getUnitsByServiceId } from "@/server_actions/(get-requests)/employeeform/filterbyservice";
 const EmployeeForm = ({
+  authtoken,
   employee,
   services,
-  serviceId,
-  ranks,
-  rankId,
-  units,
-  unitId,
   openModal,
   closeModal,
 }: {
+  authtoken?: string;
   employee?: EmployeeData | null;
   services: ServiceData[];
-  serviceId?: number;
-  ranks: RankData[];
-  rankId?: number;
-  units: UnitData[];
-  unitId?: number;
+ 
   openModal: (employee?: EmployeeData) => void;
   closeModal: () => void;
 }) => {
@@ -73,6 +65,7 @@ const EmployeeForm = ({
   const router = useRouter();
   const backpath = useBackPath("employees");
 
+  const [serviceValue, setServiceValue] = useState<number | null>(null);
   const [filterRanks, setFilterRanks] = useState<RankData[]>([]);
   const [filterUnits, setFilterUnits] = useState<UnitData[]>([]);
 
@@ -89,19 +82,21 @@ const EmployeeForm = ({
   };
 
   const handleRankandUnitFilter = (value: string) => {
-    const serviceValue = Number(value);
-
-    const filteredRanks = ranks.filter(
-      (rank) => rank.empServiceId === serviceValue
-    );
-    const filteredUnits = units.filter(
-      (unit) => unit.empServiceId === serviceValue
-    );
-
-    setFilterRanks(filteredRanks);
-    setFilterUnits(filteredUnits);
+    setServiceValue(Number(value));
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      if (serviceValue !== null) {
+        const ranks = await getRanksByServiceId(serviceValue, authtoken);
+        const units = await getUnitsByServiceId(serviceValue, authtoken);
+        setFilterRanks(ranks);
+        setFilterUnits(units)
+      }
+    };
+
+    fetchData();
+  }, [serviceValue]);
   const handleSubmit = async (data: Employeeform) => {
     try {
       const payload = {

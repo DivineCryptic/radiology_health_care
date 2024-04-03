@@ -6,32 +6,23 @@ import Modal from "../../../../../modules/shared/Modal";
 import { Button } from "@/components/ui/button";
 import { EmployeeData, TransformEmployeeData } from "@/schema/employees";
 import { ServiceData } from "@/schema/services";
-import { RankData } from "@/schema/ranks";
-import { UnitData } from "@/schema/units";
 import EmployeeForm from "./EmployeeForm";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 
 export type TOpenModal = (employee?: EmployeeData) => void;
 
-export default function  EmployeeList({
+export default function EmployeeList({
+  token,
   employees,
   services,
-  serviceId,
-  ranks,
-  rankId,
-  units,
-  unitId,
+
 }: {
+  token?: string;
   employees: TransformEmployeeData[];
   services: ServiceData[];
-  serviceId?: number;
-  ranks: RankData[];
-  rankId?: number;
-  units: UnitData[];
-  unitId?: number;
+ 
 }) {
-
   const [open, setOpen] = useState(false);
   const [activeEmployee, setActiveEmployee] = useState<EmployeeData | null>(
     null
@@ -50,15 +41,11 @@ export default function  EmployeeList({
         title={activeEmployee ? "Edit Employee" : "Create Employee"}
       >
         <EmployeeForm
+          authtoken={token}
           employee={activeEmployee}
           openModal={openModal}
           closeModal={closeModal}
-          services={services}
-          serviceId={serviceId}
-          ranks={ranks}
-          rankId={rankId}
-          units={units}
-          unitId={unitId}
+          services={services}         
         />
       </Modal>
       <div className="absolute right-0 top-0 ">
@@ -71,7 +58,6 @@ export default function  EmployeeList({
         data={employees}
         openModal={() => openModal()}
       />
-      
     </div>
   );
 }
