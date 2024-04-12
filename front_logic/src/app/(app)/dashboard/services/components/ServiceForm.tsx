@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import React, { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { useBackPath } from "../shared/BackButton";
+
 import {
   Form,
   FormControl,
@@ -17,6 +17,7 @@ import { useFormStatus } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { DialogClose } from "@/components/ui/dialog";
 import { createServiceAction } from "@/server_actions/actions/services";
+import { useBackPath } from "@/modules/shared/BackButton";
 
 const ServiceForm = ({
   service,

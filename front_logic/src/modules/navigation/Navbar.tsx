@@ -125,22 +125,7 @@ export function Navbar({ children }: { children?: React.ReactNode }) {
             <SidebarLinkGroup links={defaultLinks} />
             </nav>
           </div>
-          <div className="mt-auto p-4">
-            <Card>
-              <CardHeader className="p-2 pt-0 md:p-4">
-                <CardTitle>Upgrade to Pro</CardTitle>
-                <CardDescription>
-                  Unlock all features and get unlimited access to our support
-                  team.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
-                <Button size="sm" className="w-full">
-                  Upgrade
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
+          
         </div>
       </div>
       <div className="flex flex-col">
@@ -161,20 +146,7 @@ export function Navbar({ children }: { children?: React.ReactNode }) {
                <SidebarLinkGroup links={defaultLinks} />
               </nav>
               <div className="mt-auto">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Upgrade to Pro</CardTitle>
-                    <CardDescription>
-                      Unlock all features and get unlimited access to our
-                      support team.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button size="sm" className="w-full">
-                      Upgrade
-                    </Button>
-                  </CardContent>
-                </Card>
+                <SignOut />
               </div>
             </SheetContent>
           </Sheet>

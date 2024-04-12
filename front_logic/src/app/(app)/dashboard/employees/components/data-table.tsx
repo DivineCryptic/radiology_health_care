@@ -20,7 +20,6 @@ import { TOpenModal } from "./EmployeeList";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import { EmployeeData } from "@/schema/employees";
-import { useState } from "react";
 import { DataTablePagination } from "@/modules/shared/data-table-pagination";
 
 interface DataTableProps<TData, TValue> {
@@ -32,7 +31,6 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   data,
-
   openModal,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({

@@ -35,15 +35,12 @@ const EmployeeForm = ({
   authtoken,
   employee,
   services,
-  openModal,
-  closeModal,
+
 }: {
   authtoken?: string;
   employee?: EmployeeData | null;
   services: ServiceData[];
- 
-  openModal: (employee?: EmployeeData) => void;
-  closeModal: () => void;
+
 }) => {
   const { errors, hasErrors, setErrors, handleChange } =
     useValidatedForm<EmployeeData>(formData);
@@ -96,7 +93,8 @@ const EmployeeForm = ({
     };
 
     fetchData();
-  }, [serviceValue]);
+  }, [serviceValue, authtoken]);
+
   const handleSubmit = async (data: Employeeform) => {
     try {
       const payload = {

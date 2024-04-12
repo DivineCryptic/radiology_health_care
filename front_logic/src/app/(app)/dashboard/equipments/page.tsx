@@ -1,5 +1,7 @@
-import { getEquip } from '@/server_actions/(get-requests)/getEquip';
+import { getEquipments } from '@/server_actions/(get-requests)/getEquiments';
 import React from 'react'
+import EquipmentsList from './components/EquipmentsList';
+import { getRooms } from '@/server_actions/(get-requests)/getRooms';
 
 export default async function EquipPage () {
   return (
@@ -8,18 +10,22 @@ export default async function EquipPage () {
           <div className="flex justify-between">
             <h1 className="font-semibold text-2xl my-2">Equipment</h1>
           </div>
-          <Equip/>
+          <Equipment/>
         </div>
     </main>
   );
 }
 
-const Equip=async()=>{
-    const equip=await getEquip();
-    console.log(equip);
+const Equipment=async()=>{
+    const equipments=await getEquipments();
+    const rooms = await getRooms();
+    console.log(equipments);
 
     return(
-        <h1>Equipment</h1>
+      <div>
+        <EquipmentsList equipments={equipments} rooms={rooms} />
+      </div>
+
     )
 }
 

@@ -1,5 +1,5 @@
 import { SidebarLink } from "@/components/SidebarItems";
-import { Cog, Globe, HomeIcon } from "lucide-react";
+import { Boxes, Cog, Compass, Dice4, FlaskConical, Globe, HomeIcon, Shield, ShieldHalf, Syringe, Wrench } from "lucide-react";
 import { Building, Accessibility } from "lucide-react";
 
 type AdditionalLinks = {
@@ -11,9 +11,14 @@ export const defaultLinks: SidebarLink[] = [
   { href: "/dashboard/patients", title: "Patients", icon: Accessibility },
   { href: "/dashboard/employees", title: "Employees", icon: Building },
   { href: "/dashboard/services", title: "Services", icon: Cog },
-  { href: "/dashboard/ranks", title: "Ranks", icon: HomeIcon },
-  { href: "/dashboard/units", title: "Units", icon: Cog },
-  { href: "/dashboard/rooms", title: "Rooms", icon: Cog },
+  { href: "/dashboard/ranks", title: "Ranks", icon: ShieldHalf },
+  { href: "/dashboard/units", title: "Units", icon: Boxes },
+  { href: "/dashboard/rooms", title: "Rooms", icon: Dice4 },
+  { href: "/dashboard/patient-tests", title: "Patient Tests", icon: Syringe },
+  { href: "/dashboard/equipments", title: "Equipments", icon: Wrench},
+  { href: "/dashboard/test-categories", title: "Test Categories", icon: FlaskConical },
+  { href: "/dashboard/equipment-mappings", title: "Equipment Mappings", icon:Compass  },
+  
 
   // { href: "/dashboard/settings", title: "Settings", icon: Cog },
 ];

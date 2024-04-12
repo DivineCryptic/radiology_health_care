@@ -17,3 +17,4 @@ const insertServiceParams = serviceData.omit({id: true});
 export type ServiceData = z.infer<typeof serviceData>;
 export type ServiceForm = z.infer<typeof formData>;
 export type InsertServiceParams = z.infer<typeof insertServiceParams>;
+

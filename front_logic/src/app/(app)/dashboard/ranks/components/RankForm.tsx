@@ -28,9 +28,9 @@ import { useRouter } from "next/navigation";
 import React, { useState, useTransition } from "react";
 import { useFormStatus } from "react-dom";
 import { useForm } from "react-hook-form";
-import { useBackPath } from "../shared/BackButton";
 import { createRankAction } from "@/server_actions/actions/ranks";
 import { DialogClose } from "@/components/ui/dialog";
+import { useBackPath } from "@/modules/shared/BackButton";
 
 const RankForm = ({
   services,
@@ -54,7 +54,9 @@ const RankForm = ({
     resolver: zodResolver(formData),
     defaultValues: {
       name: rank?.name || "",
-      empServiceId: ""
+      shortName: "",
+      division: "OTHER",
+      empServiceId: "",
     },
   });
   const editing = !form.formState.isValid;
@@ -68,6 +70,8 @@ const RankForm = ({
     try {
       const payload = {
         name: data.name,
+        shortName: data.shortName,
+        division: data.division,
         empServiceId: Number(data.empServiceId),
       };
       console.log(payload);
@@ -90,6 +94,43 @@ const RankForm = ({
                 <FormLabel>Rank Name</FormLabel>
                 <FormControl>
                   <Input placeholder="Enter Rank Name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="shortName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Short Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter Short Name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="division"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Division</FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a division"></SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="OTHER">OTHER</SelectItem>
+                      <SelectItem value="COMMISSIONED">COMMISSIONED</SelectItem>
+                      <SelectItem value="NON_COMMISSIONED">
+                        NON_COMMMISSIONED
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>

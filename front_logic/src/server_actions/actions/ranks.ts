@@ -33,6 +33,7 @@ export const createRankAction = async (rank: InsertRankParams) => {
     );
     if (response.status === 201) {
         revalidateRanks();
+        console.log(response);
       return console.log("Ranks added successfully");
     }
   } catch (e) {

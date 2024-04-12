@@ -1,11 +1,11 @@
-import Loading from '@/app/loading';
-import UnitList from '@/modules/units/UnitList';
-
-import { getServices } from '@/server_actions/(get-requests)/getServices';
-import { getUnits } from '@/server_actions/(get-requests)/getUnits';
-import React from 'react'
+import Loading from "@/app/loading";
+import { ServiceData } from "@/schema/services";
+import { TransformUnitData, UnitData } from "@/schema/units";
+import { getServices } from "@/server_actions/(get-requests)/getServices";
+import { getUnits } from "@/server_actions/(get-requests)/getUnits";
+import React from "react";
 import { Suspense } from "react";
-
+import UnitList from "./components/UnitList";
 
 export default async function UnitsPage() {
   return (
@@ -20,23 +20,33 @@ export default async function UnitsPage() {
   );
 }
 
-
 const Units = async () => {
-  
-
-  //getting the data for the ranks and 
   const units = await getUnits();
   const services = await getServices();
-  // console.log(services)
-  // const { services } = await getServices();
+  const serviceMap = new Map<number, string>(
+    services.map((service: ServiceData) => [service.id, service.name])
+  );
+
+  const transformUnit = (
+    unit: UnitData,
+    serviceMap: Map<number, string>
+  ): TransformUnitData => {
+    const transformedUnit: TransformUnitData = {
+      ...unit,
+      empServiceName: serviceMap.get(unit.empServiceId) || "",
+    };
+    delete transformedUnit.empServiceId;
+
+    return transformedUnit;
+  };
+
+  const transformedUnits: TransformUnitData[] = units.map((unit: UnitData) =>
+    transformUnit(unit, serviceMap)
+  );
+
   return (
     <Suspense fallback={<Loading />}>
-
-      {/* getting the data for the services and ranks for and displaying it in the form a table for the ranks */}
-      {/* <RankList ranks={ranks} services={services} /> */}
-      <h1>Services and Units</h1>
-      <UnitList units={units} services={services} />
-     
+      <UnitList units={transformedUnits} services={services} />
     </Suspense>
   );
 };

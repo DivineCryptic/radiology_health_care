@@ -1,7 +1,8 @@
 import Loading from '@/app/loading';
-import ServiceList from '@/modules/services/ServiceList';
+
 import { getServices } from '@/server_actions/(get-requests)/getServices'
 import React, { Suspense } from 'react'
+import ServiceList from './components/ServiceList';
 
 export default async function ServicesPage() {
   return (
@@ -22,7 +23,6 @@ const Services = async() => {
     <Suspense fallback={<Loading />}>
 
       {/* getting the data for the services and ranks for and displaying it in the form a table for the ranks */}
-      <h1>Services </h1>
       <ServiceList services={services} />
      
      

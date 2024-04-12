@@ -43,8 +43,6 @@ export default function EmployeeList({
         <EmployeeForm
           authtoken={token}
           employee={activeEmployee}
-          openModal={openModal}
-          closeModal={closeModal}
           services={services}         
         />
       </Modal>

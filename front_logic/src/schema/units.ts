@@ -17,3 +17,10 @@ export type InsertUnitParams = z.infer<typeof insertUnitParams>;
 
 export type Unitform = z.infer<typeof formData>;
 export type UnitData = z.infer<typeof unitData>;
+
+export type TransformUnitData={
+  id:number;
+  name:string;
+  empServiceId?:number;
+  empServiceName:string;
+};

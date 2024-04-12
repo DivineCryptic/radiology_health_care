@@ -1,18 +1,13 @@
-
 import { Navbar } from "@/modules/navigation/Navbar";
 
-export default function Layout({
-  children,
-}: Readonly<{
+interface LayoutProps {
   children: React.ReactNode;
-}>) {
+}
+
+export default function Layout({ children }: LayoutProps) {
   return (
     <div lang="en">
-      <Navbar children={children} />
-
+      <Navbar>{children}</Navbar>
     </div>
   );
 }
-
-
-
