@@ -41,8 +41,10 @@ const EmployeeForm = ({
   authtoken?: string;
   employee?: EmployeeData | null;
   services: ServiceData[];
+
   ranks: RankData[];
   units: UnitData[];
+
 }) => {
   const { errors, hasErrors, setErrors, handleChange } =
     useValidatedForm<EmployeeData>(formData);
@@ -90,6 +92,7 @@ const EmployeeForm = ({
     fetchData();
   }, [serviceValue, authtoken]);
 
+
   // const handleRankandUnitFilter = (value: string) => {
   //   console.log(value)
 
@@ -99,6 +102,7 @@ const EmployeeForm = ({
   //     setFilterUnits(filteredUnits);
 
   // }
+
 
   const handleSubmit = async (data: Employeeform) => {
     try {
