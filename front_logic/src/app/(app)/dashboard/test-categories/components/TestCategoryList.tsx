@@ -4,12 +4,17 @@ import { useState } from "react";
 import Modal from "../../../../../modules/shared/Modal";
 import { TestCategoryData } from "@/schema/testcategory";
 import { Button } from "@/components/ui/button";
+import { DataTable } from "./data-table";
+import { columns } from "./columns";
+import TestCategoryForm from "./TestCategoryForm";
 
-export type TOpenModal = (testCategories: TestCategoryData) => void;
+export type TOpenModal = (testCategories?: TestCategoryData) => void;
 
 export default function TestCategoryList({
   testCategories,
+  token
 }: {
+  token?: string;
   testCategories: TestCategoryData[];
 }) {
   const [open, setOpen] = useState(false);
@@ -20,7 +25,7 @@ export default function TestCategoryList({
    testCategories ? setActiveTestCategory(testCategories) : setActiveTestCategory(null);
   };
 
-  const closeModal = () => setOpen(false);
+
 
   return (
     <div>
@@ -31,14 +36,14 @@ export default function TestCategoryList({
           activeTestCategory ? "Edit Tests" : "Create Tests"
         }
       >
-        hello
-        {/* <TestCategoryForm /> */}
+        <TestCategoryForm authtoken={token} />
       </Modal>
       <div className="absolute right-0 top-0">
         <Button onClick={() => openModal()} variant={"outline"}>
           +
         </Button>
       </div>
+      <DataTable columns={columns} data={testCategories} openModal={() => openModal()}/>
     </div>
   );
 }

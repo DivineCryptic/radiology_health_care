@@ -19,6 +19,7 @@ export default async function EquipPage () {
 const Equipment=async()=>{
     const equipments=await getEquipments();
     const rooms = await getRooms();
+    
     console.log(equipments);
 
     return(

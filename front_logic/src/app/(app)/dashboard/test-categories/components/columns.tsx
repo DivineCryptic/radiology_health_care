@@ -5,6 +5,7 @@ import { EditButton } from "@/modules/shared/EditButton";
 import { Pathname } from "@/modules/shared/Pathname";
 import { PatientTestsData } from "@/schema/patient-tests";
 import { TestCategoryData } from "@/schema/testcategory";
+import { deleteTestCategoryAction } from "@/server_actions/actions/testcategory";
 import { ColumnDef } from "@tanstack/react-table";
 // import Link from "next/link";
 // import { usePathname } from "next/navigation";
@@ -39,7 +40,7 @@ export const columns: ColumnDef<TestCategoryData>[] = [
             // const basePath = pathname.includes("patient-tests")
             //   ? pathname
             //   : pathname + "/patient-tests/";
-            const basepath=Pathname({prop:"test-category"})
+            const basepath=Pathname({prop:"test-categories"})
             const testcategory = row.original;
       
               return (
@@ -49,7 +50,7 @@ export const columns: ColumnDef<TestCategoryData>[] = [
                       </Button> */}
                       <EditButton prop={{id:testcategory.id}} basePath={basepath}/>
                       <Button 
-                          // onClick={() => deletePatientTestsAction(patientTests.id)}
+                          onClick={() => deleteTestCategoryAction(testcategory.id)}
                           variant={"destructive"}
                       >
                           Delete

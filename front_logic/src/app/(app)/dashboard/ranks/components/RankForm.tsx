@@ -55,7 +55,7 @@ const RankForm = ({
     defaultValues: {
       name: rank?.name || "",
       shortName: "",
-      division: "OTHER",
+      division: "OTHERS",
       empServiceId: "",
     },
   });
@@ -124,7 +124,7 @@ const RankForm = ({
                       <SelectValue placeholder="Select a division"></SelectValue>
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="OTHER">OTHER</SelectItem>
+                      <SelectItem value="OTHERS">OTHERS</SelectItem>
                       <SelectItem value="COMMISSIONED">COMMISSIONED</SelectItem>
                       <SelectItem value="NON_COMMISSIONED">
                         NON_COMMMISSIONED

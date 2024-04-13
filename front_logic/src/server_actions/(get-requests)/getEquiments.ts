@@ -1,8 +1,9 @@
 import { cookies } from "next/headers";
 import axios from "axios";
 
+const equipmentsUrl = process.env.BACKEND_URL + "/api/equipment";
+
 export const getEquipments = async () => {
-  const equipmentsUrl = process.env.BACKEND_URL + "/api/equipment";
   const userAuthToken = cookies().get("authToken")?.value;
   const bearerToken = `Bearer ${userAuthToken}`;
 

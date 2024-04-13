@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { EditButton } from "@/modules/shared/EditButton";
 import { Pathname } from "@/modules/shared/Pathname";
 import { EquipmentsData } from "@/schema/equipments";
+import { deleteEquipmentAction } from "@/server_actions/actions/equipments";
 import { ColumnDef } from "@tanstack/react-table";
 // import Link from "next/link";
 // import { usePathname } from "next/navigation";
@@ -72,7 +73,7 @@ export const columns: ColumnDef<EquipmentsData>[] = [
       // const basePath = pathname.includes("equipments")
       //   ? pathname
       //   : pathname + "/patient-tests/";
-        const basepath=Pathname({prop:"patient-tests"});
+        const basepath=Pathname({prop:"equipments"});
 
         const equipment = row.original;
 
@@ -80,7 +81,7 @@ export const columns: ColumnDef<EquipmentsData>[] = [
             <div className="flex flex-row justify-center">
                 <EditButton prop={{id:equipment.id}} basePath={basepath}/>
                 <Button 
-                    // onClick={() => deleteEquipmentsAction(equipment.id)}
+                    onClick={() => deleteEquipmentAction(equipment.id)}
                     variant={"destructive"}
                 >
                     Delete

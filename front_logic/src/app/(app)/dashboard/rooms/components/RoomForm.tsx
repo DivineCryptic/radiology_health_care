@@ -45,7 +45,7 @@ export const Roomform = ({
       console.log(payload );
       await createRoomAction(payload);
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
   };
 

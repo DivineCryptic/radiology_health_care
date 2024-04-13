@@ -3,6 +3,7 @@ import { getTestCategories } from "@/server_actions/(get-requests)/getTestCatego
 import { Suspense } from "react";
 import { any } from "zod";
 import TestCategoryList from "./components/TestCategoryList";
+import { userAuthToken } from "@/server_actions/utils/getcookies";
 
 export default async function TestCategoryPage() {
   return (
@@ -20,12 +21,10 @@ export default async function TestCategoryPage() {
 const TestCategories = async () => {
   const testcategories = await getTestCategories();
 
-  console.log(testcategories);
-
   return (
     <Suspense fallback={<Loading />}>
       {/* getting the data for the services and ranks for and displaying it in the form a table for the ranks */}
-      <TestCategoryList testCategories={testcategories} />
+      <TestCategoryList testCategories={testcategories} token={userAuthToken} />
     </Suspense>
   );
 };

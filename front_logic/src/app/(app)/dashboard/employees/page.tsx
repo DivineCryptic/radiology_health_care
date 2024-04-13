@@ -12,7 +12,8 @@ import { ServiceData } from "@/schema/services";
 import { RankData } from "@/schema/ranks";
 import { UnitData } from "@/schema/units";
 import { EmployeeData, TransformEmployeeData } from "@/schema/employees";
-import { cookies } from "next/headers";
+
+import { userAuthToken } from "@/server_actions/utils/getcookies";
 
 const EmployeesPage = () => {
   return (
@@ -34,8 +35,6 @@ const Employees = async () => {
   const services = await getServices();
   const ranks = await getRanks();
   const units = await getUnits();
-  const userAuthToken = cookies().get("authToken")?.value;
-
 
   const serviceMap = new Map<number, string>(
     services.map((service: ServiceData) => [service.id, service.name])
@@ -83,6 +82,8 @@ const Employees = async () => {
         token={userAuthToken }
         employees={transformedEmployees}
         services={services}
+        ranks={ranks}
+        units={units}
       />
     </Suspense>
   );

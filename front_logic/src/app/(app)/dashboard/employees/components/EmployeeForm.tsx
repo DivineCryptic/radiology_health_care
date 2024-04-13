@@ -30,16 +30,20 @@ import { RankData } from "@/schema/ranks";
 import { UnitData } from "@/schema/units";
 import { Checkbox } from "@/components/ui/checkbox";
 import { createEmployeeAction } from "@/server_actions/actions/employee";
-import { getRanksByServiceId, getUnitsByServiceId } from "@/server_actions/(get-requests)/employeeform/filterbyservice";
+
+import { getRanks } from "@/server_actions/(get-requests)/getRanks";
+import { getRanksByServiceId, getUnitsByServiceId } from "@/server_actions/(get-requests)/client/clientside";
 const EmployeeForm = ({
   authtoken,
   employee,
   services,
-
 }: {
   authtoken?: string;
   employee?: EmployeeData | null;
   services: ServiceData[];
+
+  ranks: RankData[];
+  units: UnitData[];
 
 }) => {
   const { errors, hasErrors, setErrors, handleChange } =
@@ -59,19 +63,14 @@ const EmployeeForm = ({
   });
   const editing = !form.formState.isValid;
 
-  const router = useRouter();
-  const backpath = useBackPath("employees");
-
   const [serviceValue, setServiceValue] = useState<number | null>(null);
   const [filterRanks, setFilterRanks] = useState<RankData[]>([]);
   const [filterUnits, setFilterUnits] = useState<UnitData[]>([]);
 
-  const [filterText, setFilterText] = useState<string>("");
   const [filteredSevices, setFilteredServices] = useState(services || []);
 
   const handleServiceFilter = (value: string) => {
-    setFilterText(value);
-
+    
     const filteredServices = services.filter((service) =>
       service.name.toLowerCase().includes(value.toLowerCase())
     );
@@ -81,19 +80,29 @@ const EmployeeForm = ({
   const handleRankandUnitFilter = (value: string) => {
     setServiceValue(Number(value));
   };
-
   useEffect(() => {
     const fetchData = async () => {
       if (serviceValue !== null) {
         const ranks = await getRanksByServiceId(serviceValue, authtoken);
         const units = await getUnitsByServiceId(serviceValue, authtoken);
         setFilterRanks(ranks);
-        setFilterUnits(units)
+        setFilterUnits(units);
       }
     };
-
     fetchData();
   }, [serviceValue, authtoken]);
+
+
+  // const handleRankandUnitFilter = (value: string) => {
+  //   console.log(value)
+
+  //     const filteredRanks = ranks.filter((rank) => rank.empServiceId === Number(value));
+  //     setFilterRanks(filteredRanks);
+  //     const filteredUnits = units.filter((unit) => unit.empServiceId === Number(value));
+  //     setFilterUnits(filteredUnits);
+
+  // }
+
 
   const handleSubmit = async (data: Employeeform) => {
     try {

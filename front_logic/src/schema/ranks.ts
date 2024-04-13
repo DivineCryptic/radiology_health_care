@@ -4,14 +4,14 @@ const rankData = z.object({
   id: z.number(),
   name: z.string(),
   shortName:z.string().max(10),
-  division:z.enum(["OTHER","COMMISSIONED","NON_COMMISSIONED"]),
+  division:z.enum(["OTHERS","COMMISSIONED","NON_COMMISSIONED"]),
   empServiceId: z.number(),
 });
 
 export const formData = z.object({
   name: z.string(),
   shortName:z.string().max(10),
-  division:z.enum(["OTHER","COMMISSIONED","NON_COMMISSIONED"]),
+  division:z.enum(["OTHERS","COMMISSIONED","NON_COMMISSIONED"]),
   empServiceId: z.string(),
 });
 

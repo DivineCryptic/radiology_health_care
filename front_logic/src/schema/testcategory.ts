@@ -19,8 +19,10 @@ export const formData = z.object({
     parentTestCategoryId: z.string(),
 })
 
-const insertTestCategoryParams = TestCategoryData.omit({ id: true });
+export const insertTestCategoryParams = TestCategoryData.omit({ id: true });
 
 export type TestCategoryData = z.infer<typeof TestCategoryData>;
 
 export type TestCategoryform = z.infer<typeof formData>
+
+export type InsertTestCategoryParams = z.infer<typeof insertTestCategoryParams>
