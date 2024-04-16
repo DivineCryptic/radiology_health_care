@@ -2,6 +2,9 @@ import Loading from "@/app/loading";
 import { getPatientTests } from "@/server_actions/(get-requests)/getPatientTests";
 import React, { Suspense } from "react";
 import PatientTestsList from "./components/PatientTestsList";
+import { userAuthToken } from "@/server_actions/utils/getcookies";
+
+
 
 const PatientTestsPage = () => {
   return (
@@ -24,7 +27,7 @@ const PatientTests = async () => {
   return (
     <Suspense fallback={<Loading />}>
       
-      <PatientTestsList patientTests={patientTests} />
+      <PatientTestsList patientTests={patientTests} token={userAuthToken} />
     </Suspense>
   );
 };

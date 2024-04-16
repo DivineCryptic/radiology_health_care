@@ -19,19 +19,17 @@ import { z } from "zod";
 
 const PatientTestsData = z.object({
   id: z.number(),
-  testTimings: z.string(),
   priority: z.string(),
   status: z.string(),
   clinicalNote: z.string(),
   spclInstruction: z.string(),
   patientInfoId: z.number(),
   testCategoriesId: z.number(),
-  startTime: z.string(),
-  endTime: z.string(),
+  startTime: z.date(),
+  endTime: z.date(),
 });
 
 export const formData = z.object({
-  testTimings: z.string(),
   priority: z.string(),
   status: z.string(),
   clinicalNote: z.string(),

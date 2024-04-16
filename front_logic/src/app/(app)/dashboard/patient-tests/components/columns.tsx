@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { EditButton } from "@/modules/shared/EditButton";
 import { Pathname } from "@/modules/shared/Pathname";
 import { PatientTestsData } from "@/schema/patient-tests";
+import { deletePatientTestsAction } from "@/server_actions/actions/patient-tests";
 import { ColumnDef } from "@tanstack/react-table";
 // import Link from "next/link";
 // import { usePathname } from "next/navigation";
@@ -21,17 +22,10 @@ export const columns: ColumnDef<PatientTestsData>[] = [
     },
   },
   {
-    accessorKey: "testTimings",
-    header: "Test Timings",
-  },
-  {
     accessorKey: "priority",
     header: "Priority",
   },
-  {
-    accessorKey: "clinicalNote",
-    header: "Clinical Note",
-  },
+
     {
       accessorKey: "status",
       header: "Status",
@@ -43,10 +37,14 @@ export const columns: ColumnDef<PatientTestsData>[] = [
         accessorKey: "endTime",
         header: "End Time"
     },
-  {
-    accessorKey: "spclInstruction",
-    header: "Special Instruction",
-  },
+  // {
+  //   accessorKey: "spclInstruction",
+  //   header: "Special Instruction",
+  // },
+  // {
+  //   accessorKey: "clinicalNote",
+  //   header: "Clinical Note",
+  // },
   {
     accessorKey: "patientInfoId",
     //this will be later replaced with the name or will remain the same
@@ -79,7 +77,7 @@ export const columns: ColumnDef<PatientTestsData>[] = [
                 </Button> */}
                 <EditButton prop={{id:patientTests.id}} basePath={basepath}/>
                 <Button 
-                    // onClick={() => deletePatientTestsAction(patientTests.id)}
+                    onClick={() => deletePatientTestsAction(patientTests.id)}
                     variant={"destructive"}
                 >
                     Delete

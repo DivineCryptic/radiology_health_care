@@ -48,8 +48,8 @@ const TestCategoryForm = ({ authtoken }: { authtoken?: string }) => {
     resolver: zodResolver(formData),
     defaultValues: {
       testName: "",
-      equipmentId: "",
-      parentTestCategoryId: "0",
+      equipmentId: "null",
+      parentTestCategoryId: "",
     },
   });
   const editing = !form.formState.isValid;
