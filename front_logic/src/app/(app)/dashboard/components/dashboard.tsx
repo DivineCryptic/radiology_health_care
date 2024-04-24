@@ -1,5 +1,4 @@
-import Image from "next/image";
-import Link from "next/link";
+"use client";
 import {
   Activity,
   ChevronLeft,
@@ -7,22 +6,11 @@ import {
   Copy,
   CreditCard,
   File,
-  Home,
-  Hospital,
-  LineChart,
+
   ListFilter,
-  MoreHorizontal,
+
   MoreVertical,
-  Package,
-  Package2,
-  PanelLeft,
-  Plus,
-  PlusCircle,
-  Search,
-  Settings,
-  ShoppingCart,
-  Truck,
-  Users2,
+
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -45,23 +33,26 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Pagination, PaginationContent, PaginationItem } from "@/components/ui/pagination";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+} from "@/components/ui/pagination";
 import { Separator } from "@/components/ui/separator";
 import { Progress } from "@/components/ui/progress";
 import PatientTestsList from "../patient-tests/components/PatientTestsList";
+import { useState } from "react";
+import {  TransformPatientTestsData } from "@/schema/patient-tests";
+import { TestCategoryData } from "@/schema/testcategory";
+import { PatientData } from "@/schema/patients";
 
-function Dashboard() {
+function Dashboard({ patientTests, tests, patients }: { patientTests: TransformPatientTestsData[], tests: TestCategoryData[], patients: PatientData[] }) {
+  const [open, setOpen] = useState(false);
+
+  const openModal = () => {
+    setOpen(true);
+  };
   return (
     <div className="flex flex-col sm:gap-4  ">
       <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
@@ -155,11 +146,14 @@ function Dashboard() {
                 <CardHeader className="px-7">
                   <CardTitle>Patient Tests for Today</CardTitle>
                   <CardDescription>
-                    Patient tests for the day of {new Date().toLocaleDateString()}
+                    Patient tests for the day of{" "}
+                    {new Date().toLocaleDateString()}
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <PatientTestsList patientTests={[]}/>
+                <CardContent className="">
+
+                  {/* patient tests being rendered */}
+                  <PatientTestsList patientTests={patientTests} tests={tests} patients={patients} />
                 </CardContent>
               </Card>
             </TabsContent>
@@ -170,7 +164,7 @@ function Dashboard() {
             <CardHeader className="flex flex-row items-start bg-muted/50">
               <div className="grid gap-0.5">
                 <CardTitle className="group flex items-center gap-2 text-lg">
-                 Metrics
+                  Metrics
                   <Button
                     size="icon"
                     variant="outline"
@@ -211,13 +205,13 @@ function Dashboard() {
                 <ul className="grid gap-3">
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">
-                     Number of admissions 
+                      Number of admissions
                     </span>
                     <span>130</span>
                   </li>
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">
-                       <span>Number of discharges</span>
+                      <span>Number of discharges</span>
                     </span>
                     <span>10</span>
                   </li>
@@ -225,18 +219,22 @@ function Dashboard() {
                 <Separator className="my-2" />
                 <ul className="grid gap-3">
                   <li className="flex items-center justify-between">
-                  <div className="font-semibold">Operation Metrics</div>
+                    <div className="font-semibold">Operation Metrics</div>
                   </li>
                   <li className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Average length of stay</span>
+                    <span className="text-muted-foreground">
+                      Average length of stay
+                    </span>
                     <span>3.5 days</span>
                   </li>
                   <li className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Average wait time in the emergency</span>
+                    <span className="text-muted-foreground">
+                      Average wait time in the emergency
+                    </span>
                     <span>12mins</span>
                   </li>
                   <li className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Bed occupancy</span>
+                    <span className="text-muted-foreground">Bed occupancy</span>
                     <span>120</span>
                   </li>
                 </ul>
@@ -251,15 +249,11 @@ function Dashboard() {
                   </div>
                   <div className="flex items-center justify-between">
                     <dt className="text-muted-foreground">Nurses</dt>
-                    <dd>
-                      37
-                    </dd>
+                    <dd>37</dd>
                   </div>
                   <div className="flex items-center justify-between">
                     <dt className="text-muted-foreground">Support Staff</dt>
-                    <dd>
-                      12
-                    </dd>
+                    <dd>12</dd>
                   </div>
                 </dl>
               </div>
@@ -272,16 +266,14 @@ function Dashboard() {
                     <dd>23%</dd>
                   </div>
                   <div className="flex items-center justify-between">
-                    <dt className="text-muted-foreground">Medication Dispensed</dt>
-                    <dd>
-                      13%
-                    </dd>
+                    <dt className="text-muted-foreground">
+                      Medication Dispensed
+                    </dt>
+                    <dd>13%</dd>
                   </div>
                   <div className="flex items-center justify-between">
                     <dt className="text-muted-foreground">Pharmacy Staff</dt>
-                    <dd>
-                      4
-                    </dd>
+                    <dd>4</dd>
                   </div>
                 </dl>
               </div>

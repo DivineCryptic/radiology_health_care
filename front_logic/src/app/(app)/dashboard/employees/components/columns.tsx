@@ -1,24 +1,10 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import DropDown from "@/modules/shared/DropDown";
-import { EditButton } from "@/modules/shared/EditButton";
 import { Pathname } from "@/modules/shared/Pathname";
-import { EmployeeData, TransformEmployeeData } from "@/schema/employees";
+import { TransformEmployeeData } from "@/schema/employees";
 import { deleteEmployeeAction } from "@/server_actions/actions/employee";
 import { ColumnDef } from "@tanstack/react-table";
-// import Link from "next/link";
-// import { usePathname } from "next/navigation";
-
-// type EmployeeData = {
-//     id: number;
-//     name: string;
-//     technician: boolean;
-//     his: string;
-//     serviceNo: string;
-//     empServiceId: number;
-//     rankId: number;
-//     unitId: number;
 
 export const columns: ColumnDef<TransformEmployeeData>[] = [
   {

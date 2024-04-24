@@ -2,9 +2,8 @@
 
 import axios from "axios";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
-import { userAuthToken } from "../utils/getcookies";
 import { InsertTestCategoryParams } from "@/schema/testcategory";
+import { cookies } from "next/headers";
 
 // {
 //     "id": 1,
@@ -21,8 +20,10 @@ import { InsertTestCategoryParams } from "@/schema/testcategory";
 //   },
 
 const testCategoryUrl = process.env.BACKEND_URL + "/api/test-categories";
+const userAuthToken = cookies().get("authToken")?.value;
 
 const bearerToken = `Bearer ${userAuthToken}`;
+
 const handleErrors = (e: unknown) => {
   const errMsg = "Error, please try again.";
   if (e instanceof Error) return e.message.length > 0 ? e.message : errMsg;

@@ -32,6 +32,11 @@ export const columns: ColumnDef<PatientTestsData>[] = [
   //   enableHiding: false,
   // },
   {
+    accessorKey: "patientName",
+    //this will be later replaced with the name or will remain the same
+    header: "Patient Name",
+  },
+  {
     accessorKey: "priority",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Priority" />
@@ -128,11 +133,7 @@ export const columns: ColumnDef<PatientTestsData>[] = [
   //   accessorKey: "clinicalNote",
   //   header: "Clinical Note",
   // },
-  {
-    accessorKey: "patientName",
-    //this will be later replaced with the name or will remain the same
-    header: "Patient Name",
-  },
+
   {
     accessorKey: "testName",
     //this will be later replaced with the name

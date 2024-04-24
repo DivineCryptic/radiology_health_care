@@ -10,6 +10,8 @@ import {
   PatientTestsData,
   TransformPatientTestsData,
 } from "@/schema/patient-tests";
+import { Button } from "@/components/ui/button";
+import { getChildTestCategories } from "@/server_actions/(get-requests)/getChildTests";
 
 const PatientTestsPage = () => {
   return (
@@ -27,13 +29,16 @@ const PatientTestsPage = () => {
 export default PatientTestsPage;
 
 const PatientTests = async () => {
+
+
   const patientTestsInfo = await getPatientTests();
 
   const patientInfo = await getPatients();
-  const TestsInfo = await getTestCategories();
+  const testsInfo = await getTestCategories();
+  const childTestsInfo = await getChildTestCategories();
 
   const testMap = new Map<number, string>(
-    TestsInfo.map((testinfo: TestCategoryData) => [
+    testsInfo.map((testinfo: TestCategoryData) => [
       testinfo.id,
       testinfo.testName,
     ])
@@ -66,7 +71,8 @@ const PatientTests = async () => {
     );
   return (
     <Suspense fallback={<Loading />}>
-      <PatientTestsList patientTests={transformedPatientTests}  />
+
+      <PatientTestsList patientTests={transformedPatientTests} patients={patientInfo} tests={childTestsInfo}  />
     </Suspense>
   );
 };

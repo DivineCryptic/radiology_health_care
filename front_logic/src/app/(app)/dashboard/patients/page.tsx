@@ -2,6 +2,7 @@ import { getPatients } from "@/server_actions/(get-requests)/getPatients";
 import React, { Suspense } from "react";
 import Loading from "@/app/loading";
 import PatientList from "./components/PatientList";
+import { getEmployees } from "@/server_actions/(get-requests)/getEmployees";
 
 const PatientPage = () => {
   return (
@@ -19,10 +20,14 @@ const PatientPage = () => {
 export default PatientPage;
 
 const Patients = async () => {
+
+
   const patients = await getPatients();
+  const employees = await getEmployees()
   return (
     <Suspense fallback={<Loading />}>
-      <PatientList patients={patients} />
+
+      <PatientList patients={patients} employees={employees} />
     </Suspense>
   );
 };

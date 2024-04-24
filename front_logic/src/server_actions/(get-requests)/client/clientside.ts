@@ -40,26 +40,6 @@ export const getUnitsByServiceId = async (
   return Units;
 };
 
-export const getAuthToken = async (
-  user?: string | null ,
-  pass?: string | null
-) => {
-  const authenticateUrl =
-    process.env.NEXT_PUBLIC_BACKEND_URL + "/api/authenticate";
-  try {
-    const response = await axios.post(authenticateUrl, {
-      username: user,
-      password: pass,
-    });
-    const usertoken = response.data;
-    const userIdToken = usertoken;
-
-    return userIdToken;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 export const getEquipmentsByClient = async (authToken?: any) => {
   const publicEquipmentsUrl =
     process.env.NEXT_PUBLIC_BACKEND_URL + "/api/equipment";
@@ -74,9 +54,9 @@ export const getEquipmentsByClient = async (authToken?: any) => {
   return Equipments;
 };
 
+
 export const getAllPatientsData = async (authToken?: any) => {
-  const publicPatientsUrl =
-    process.env.NEXT_PUBLIC_BACKEND_URL + "/api/patient-infos";
+  const publicPatientsUrl = process.env.NEXT_PUBLIC_BACKEND_URL + "/api/patient-infos";
   const userAuthToken = authToken;
   const bearerToken = `Bearer ${userAuthToken}`;
   const response = await axios.get(publicPatientsUrl, {
@@ -86,38 +66,24 @@ export const getAllPatientsData = async (authToken?: any) => {
   });
   const Patients = response.data;
   return Patients;
-};
+}
+
 
 //Test Categories client side requests
 
-export const getParentTestCategories = async (authToken?: any) => {
-  const getParentTestCategoriesUrl =
-    process.env.NEXT_PUBLIC_BACKEND_URL +
-    "/api/test-categories?parentTestCategoryId.specified=false";
 
-  const userAuthToken = authToken;
-  const bearerToken = `Bearer ${userAuthToken}`;
-  const response = await axios.get(getParentTestCategoriesUrl, {
-    headers: {
-      Authorization: bearerToken,
-    },
-  });
-  const ParentTestCategories = response.data;
-  return ParentTestCategories;
-};
-
-export const getChildTestCategories = async (authToken?: any) => {
-  const getChildTestCategoriesUrl =
-    process.env.NEXT_PUBLIC_BACKEND_URL +
-    "/api/test-categories?parentTestCategoryId.specified=true";
-
+export const getChildTestCategories = async( authToken? : any) => {
+  const getChildTestCategoriesUrl = process.env.NEXT_PUBLIC_BACKEND_URL + "/api/test-categories?parentTestCategoryId.specified=true";
+  
   const userAuthToken = authToken;
   const bearerToken = `Bearer ${userAuthToken}`;
   const response = await axios.get(getChildTestCategoriesUrl, {
     headers: {
-      Authorization: bearerToken,
-    },
-  });
-  const ChildTestCategories = response.data;
-  return ChildTestCategories;
-};
+      Authorization: bearerToken
+    }
+  })
+  const ChildTestCategories = response.data 
+  return ChildTestCategories
+}
+
+

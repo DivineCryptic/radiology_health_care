@@ -22,11 +22,7 @@ import {
   TestCategoryData,
   TestCategoryform,
 } from "@/schema/testcategory";
-import {
-  getAuthToken,
-  getEquipmentsByClient,
-  getParentTestCategories,
-} from "@/server_actions/(get-requests)/client/clientside";
+
 import { createTestCategoryAction } from "@/server_actions/actions/testcategory";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -35,7 +31,10 @@ import { useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { useForm } from "react-hook-form";
 
-const TestCategoryForm = () => {
+const TestCategoryForm = ({equipments , categories}:{
+  equipments : EquipmentsData[];
+  categories :TestCategoryData[]
+}) => {
   const { errors, hasErrors, setErrors, handleChange } =
     useValidatedForm<TestCategoryData>(formData);
 
@@ -73,32 +72,6 @@ const TestCategoryForm = () => {
     }
   };
 
-  useEffect(() => {
-    const user = localStorage.getItem("username");
-    const pass = localStorage.getItem("password");
-
-    if (getData == true) {
-      const fetchToken = async () => {
-        const token = await getAuthToken(user, pass);
-        const tokenGet = token.id_token;
-        setToken(tokenGet);
-      };
-      if (!!token) {
-        const fetchEquipments = async () => {
-          const equipments = await getEquipmentsByClient(token);
-          setGotEquipments(equipments);
-        };
-        const fetchParentTestCategories = async () => {
-          const parentTestCategories = await getParentTestCategories(token);
-          setGotParentsCategory(parentTestCategories);
-        };
-        fetchEquipments();
-        fetchParentTestCategories();
-      }
-      fetchToken();
-      setGetData(false);
-    }
-  }, [getData, token]);
 
   return (
     <div className="mx-auto px-5">
@@ -129,7 +102,7 @@ const TestCategoryForm = () => {
                         <SelectValue placeholder="Select the equipment"></SelectValue>
                       </SelectTrigger>
                       <SelectContent>
-                        {gotEquipments.map((equipment: EquipmentsData) => (
+                        {equipments.map((equipment: EquipmentsData) => (
                           <SelectItem
                             key={equipment.id}
                             value={equipment.id.toString()}
@@ -167,7 +140,7 @@ const TestCategoryForm = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="0">Test Is Parent</SelectItem>
-                      {gotParentsCategory.map((category: TestCategoryData) => (
+                      {categories.map((category: TestCategoryData) => (
                         <SelectItem
                           key={category.id}
                           value={category.id.toString()}

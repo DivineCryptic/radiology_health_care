@@ -19,7 +19,6 @@ import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import { DataTablePagination } from "@/modules/shared/data-table-pagination";
 
-
 interface DataTableProps<TData, TValues> {
   columns: ColumnDef<TData, TValues>[];
   data: TData[];
@@ -47,7 +46,7 @@ export function DataTable<TData, TValues>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={headerGroup.id}>
+                    <TableHead key={header.id}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -89,8 +88,8 @@ export function DataTable<TData, TValues>({
             )}
           </TableBody>
         </Table>
-        <div className="px-2 py-4">
-            <DataTablePagination table={table}/>
+        <div className="py-4 px-2">
+          <DataTablePagination table={table} />
         </div>
       </div>
     </div>

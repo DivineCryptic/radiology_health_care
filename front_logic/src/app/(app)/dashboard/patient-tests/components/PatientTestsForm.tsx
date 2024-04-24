@@ -32,23 +32,22 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { TestCategoryData } from "@/schema/testcategory";
 import { PatientData } from "@/schema/patients";
-import {
-  getAllPatientsData,
-  getAuthToken,
-  getChildTestCategories,
-} from "@/server_actions/(get-requests)/client/clientside";
+
 import { RefreshCcwDot } from "lucide-react";
 import { createPatientTestsAction } from "@/server_actions/actions/patient-tests";
 
-const PatientTestsForm = () => {
+const PatientTestsForm = ({
+  patients,
+  activePatient,
+  tests,
+}: {
+  patients: PatientData[];
+  activePatient?: PatientData | null;
+  tests: TestCategoryData[];
+}) => {
   const { errors, hasErrors, handleChange, setErrors } =
     useValidatedForm<PatientTestsData>(formData);
 
-  const [getData, setGetData] = useState<boolean>(false);
-  const [gotChildrenCategory, setGotChildrenCategory] = useState<
-    TestCategoryData[]
-  >([]);
-  const [gotPatients, setGotPatients] = useState<PatientData[]>([]);
   const [selectedDate, setSelectedDate] = useState("");
   const [token, setToken] = useState("");
 
@@ -68,6 +67,7 @@ const PatientTestsForm = () => {
 
   const editing = !form.formState.isValid;
 
+  const [childTests, setChildTests] = useState<TestCategoryData[]>([]);
   const handleSubmit = async (data: PatientTestsform) => {
     try {
       const payload = {
@@ -92,36 +92,11 @@ const PatientTestsForm = () => {
 
   useEffect(() => {
     const storedDate = localStorage.getItem("selectedDate");
-    const user = localStorage.getItem("username");
-    const pass = localStorage.getItem("password");
 
     if (storedDate) {
       setSelectedDate(storedDate);
     }
-    if (getData === true) {
-      const fetchToken = async () => {
-        const token = await getAuthToken(user, pass);
-        const tokenGet = token.id_token;
-        setToken(tokenGet);
-      };
-      if (!!token) {
-        const fetchPatients = async () => {
-          const patients = await getAllPatientsData(token);
-          setGotPatients(patients);
-        };
-        const fetchCategories = async () => {
-          const categories = await getChildTestCategories(token);
-          setGotChildrenCategory(categories);
-        };
-        fetchPatients();
-        fetchCategories();
-      }
-
-      fetchToken();
-      setGetData(false);
-    }
-  }, [token, getData]);
-
+  }, []);
 
   return (
     <div className=" mr-10 ml-5">
@@ -130,17 +105,6 @@ const PatientTestsForm = () => {
       </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-          <div className="flex justify-end absolute right-10 top-10">
-            <div
-              onClick={() => setGetData(true)}
-              className={`bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-6 rounded-lg hover:cursor-pointer ${
-                token && "bg-red-500"
-              }`}
-            >
-              {" "}
-              Get Data
-            </div>
-          </div>
           <div className="flex gap-5">
             <div className="flex-1">
               <FormField
@@ -158,7 +122,7 @@ const PatientTestsForm = () => {
                           <SelectValue placeholder="Select Patient"></SelectValue>
                         </SelectTrigger>
                         <SelectContent>
-                          {gotPatients?.map((patient) => (
+                          {patients?.map((patient) => (
                             <SelectItem
                               key={patient.id}
                               value={patient.id.toString()}
@@ -215,7 +179,7 @@ const PatientTestsForm = () => {
                           <SelectValue placeholder="Select Test Category"></SelectValue>
                         </SelectTrigger>
                         <SelectContent>
-                          {gotChildrenCategory?.map((category) => (
+                          {tests?.map((category) => (
                             <SelectItem
                               key={category.id}
                               value={category.id.toString()}

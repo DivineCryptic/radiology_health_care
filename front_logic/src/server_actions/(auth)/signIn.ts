@@ -6,6 +6,7 @@ import { signInForm } from "@/inferedTypes";
 
 
 
+
 export const SignedInUser = async (values: signInForm) => {
   const authenticateUrl = process.env.BACKEND_URL + "/api/authenticate";
   try {
@@ -14,10 +15,6 @@ export const SignedInUser = async (values: signInForm) => {
       password: values.password,
     });
     await cookieLogin(response.data);
-
-    const request = response.data
-
-    localStorage.setItem("token", request.id_token);
 
     const userAuthToken = cookies().get("authToken")?.value;
     return userAuthToken;
