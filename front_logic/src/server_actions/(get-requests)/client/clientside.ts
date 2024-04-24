@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getRanksByServiceId = async (
   serviceId: number,
-  authToken?: string
+  authToken?: any
 ) => {
   const ranksByIdUrl =
     process.env.NEXT_PUBLIC_BACKEND_URL +
@@ -22,7 +22,7 @@ export const getRanksByServiceId = async (
 
 export const getUnitsByServiceId = async (
   serviceId: number,
-  authToken?: string
+  authToken?: any
 ) => {
   const unitsByIdUrl =
     process.env.NEXT_PUBLIC_BACKEND_URL +
@@ -40,7 +40,7 @@ export const getUnitsByServiceId = async (
   return Units;
 };
 
-export const getEquipmentsByClient = async (authToken?: string) => {
+export const getEquipmentsByClient = async (authToken?: any) => {
   const publicEquipmentsUrl =
     process.env.NEXT_PUBLIC_BACKEND_URL + "/api/equipment";
   const userAuthToken = authToken;
@@ -55,7 +55,7 @@ export const getEquipmentsByClient = async (authToken?: string) => {
 };
 
 
-export const getAllPatientsData = async (authToken?: string) => {
+export const getAllPatientsData = async (authToken?: any) => {
   const publicPatientsUrl = process.env.NEXT_PUBLIC_BACKEND_URL + "/api/patient-infos";
   const userAuthToken = authToken;
   const bearerToken = `Bearer ${userAuthToken}`;
@@ -71,22 +71,8 @@ export const getAllPatientsData = async (authToken?: string) => {
 
 //Test Categories client side requests
 
-export const getParentTestCategories = async(authToken? : string) => {
-  const getParentTestCategoriesUrl = process.env.NEXT_PUBLIC_BACKEND_URL + "/api/test-categories?parentTestCategoryId.specified=false";
-  
-  const userAuthToken = authToken;
-  const bearerToken = `Bearer ${userAuthToken}`;
-  const response = await axios.get(getParentTestCategoriesUrl, {
-    headers: {
-      Authorization: bearerToken
-    }
-  })
-  const ParentTestCategories = response.data 
-  return ParentTestCategories
-}
 
-
-export const getChildTestCategories = async( authToken? : string) => {
+export const getChildTestCategories = async( authToken? : any) => {
   const getChildTestCategoriesUrl = process.env.NEXT_PUBLIC_BACKEND_URL + "/api/test-categories?parentTestCategoryId.specified=true";
   
   const userAuthToken = authToken;

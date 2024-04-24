@@ -20,7 +20,7 @@ import { useValidatedForm } from "@/hooks/useValidatedForm";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import React, { useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { useFormStatus } from "react-dom";
 import { useForm } from "react-hook-form";
 import { useBackPath } from "../../../../../modules/shared/BackButton";
@@ -36,6 +36,7 @@ import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { DialogClose } from "@/components/ui/dialog";
 import { createPatientAction } from "@/server_actions/actions/patient";
+import { EmployeeData } from "@/schema/employees";
 
 // type Patientform = {
 //     name: string;
@@ -49,15 +50,18 @@ import { createPatientAction } from "@/server_actions/actions/patient";
 //     employeeServiceNoId: string;
 // }
 const PatientForm = ({
+  employees,
   patient,
   openModal,
   closeModal,
 }: {
+  employees: EmployeeData[];
   patient?: PatientData | null;
   openModal: (patient?: PatientData) => void;
   closeModal: () => void;
 }) => {
   const [calcAge, setCalcAge] = useState(0);
+
   const form = useForm<Patientform>({
     resolver: zodResolver(formData),
     defaultValues: {
@@ -271,7 +275,22 @@ const PatientForm = ({
               <FormItem className="flex-1 w-full">
                 <FormLabel>Employee Id</FormLabel>
                 <FormControl>
-                  <Input placeholder="Employee Id" {...field} />
+                  {/* <Input placeholder="Employee Id" {...field} /> */}
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="select the employee"></SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      {employees.map((employee) => (
+                        <SelectItem
+                          key={employee.id}
+                          value={employee.id.toString()}
+                        >
+                          {employee.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>

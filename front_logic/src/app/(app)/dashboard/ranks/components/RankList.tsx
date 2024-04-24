@@ -52,7 +52,13 @@ export default function RankList({
           +
         </Button>
       </div>
-      <DataTable columns={columns} data={ranks} openModal={()=>openModal()} />
+      <DataTable 
+        columns={columns}
+        data={ranks}
+        openModal={() => openModal()}
+      />
+
+   
     </div>
   );
 }

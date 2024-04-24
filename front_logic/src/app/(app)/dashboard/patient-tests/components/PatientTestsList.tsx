@@ -4,49 +4,54 @@ import { useState } from "react";
 import Modal from "../../../../../modules/shared/Modal";
 
 import { Button } from "@/components/ui/button";
-import { PatientTestsData } from "@/schema/patient-tests";
+import { PatientTestsData, TransformPatientTestsData,  } from "@/schema/patient-tests";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import PatientTestsForm from "./PatientTestsForm";
+import ButtonModal from "../../../../../modules/shared/ButtonModal";
+import { TestCategoryData } from "@/schema/testcategory";
+import { PatientData } from "@/schema/patients";
 
 export type TOpenModal = (patientTests?: PatientTestsData) => void;
 
 export default function PatientTestsList({
   patientTests,
-  token
+  tests,
+  patients,
 }: {
-  patientTests: PatientTestsData[];
-  token? : string
+  patientTests: TransformPatientTestsData[];
+  tests: TestCategoryData[];
+  patients: PatientData[];
+
 }) {
   const [open, setOpen] = useState(false);
-  const [activePatientTests, setActivePatientTests] =
-    useState<PatientTestsData | null>(null);
-  const openModal = (patientTests?: PatientTestsData) => {
+
+  const openModal = () => {
     setOpen(true);
-    patientTests
-      ? setActivePatientTests(patientTests)
-      : setActivePatientTests(null);
   };
-  const closeModal = () => setOpen(false);
 
   return (
     <div className="">
+  
       <Modal
         open={open}
         setOpen={setOpen}
         title={
-          activePatientTests ? "Edit Patient Tests" : "Create Patient Tests"
+          "Add Patient Tests"
         }
         className="sm:max-w-[425px] min-w-[1200px] min-h-[500px] "
       
       >
-        <PatientTestsForm authtoken={token}/>
+        <PatientTestsForm patients={patients} tests={tests}  />
       </Modal>
-      <div className="absolute right-0 top-0">
+      <div className="flex justify-between pb-5 -mt-10">
+        <div></div>
         <Button onClick={() => openModal()} variant={"outline"}>
           +
         </Button>
       </div>
+
+      
       <DataTable
         columns={columns}
         data={patientTests}

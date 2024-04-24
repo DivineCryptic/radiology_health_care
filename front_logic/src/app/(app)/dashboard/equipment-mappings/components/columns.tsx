@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import DropDown from "@/modules/shared/DropDown";
 import { EditButton } from "@/modules/shared/EditButton";
 import { Pathname } from "@/modules/shared/Pathname";
 import { EquipmentsMappingData } from "@/schema/equipmentmapping";
@@ -72,13 +73,8 @@ export const columns: ColumnDef<EquipmentsMappingData>[] = [
     
             return (
                 <div className="flex flex-row justify-center">
-                    <EditButton prop={{id:equipmentMappings.id}} basePath={basepath}/>
-                    <Button 
-                        // onClick={() => deletePatientTestsAction(patientTests.id)}
-                        variant={"destructive"}
-                    >
-                        Delete
-                    </Button>
+                    {/* <DropDown name={{id:equipmentMappings.id}} deletefunc={deleteEquipmentMappingsAction} basepath={basepath}/> */}
+                    
                 </div>
             )
         },

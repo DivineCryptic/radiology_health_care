@@ -13,7 +13,6 @@ import { RankData } from "@/schema/ranks";
 import { UnitData } from "@/schema/units";
 import { EmployeeData, TransformEmployeeData } from "@/schema/employees";
 
-import { userAuthToken } from "@/server_actions/utils/getcookies";
 
 const EmployeesPage = () => {
   return (
@@ -79,7 +78,6 @@ const Employees = async () => {
     <Suspense fallback={<Loading />}>
       {/* getting the Transformed data for the services and ranks for and displaying it in the form a table for the ranks */}
       <EmployeeList
-        token={userAuthToken }
         employees={transformedEmployees}
         services={services}
         ranks={ranks}

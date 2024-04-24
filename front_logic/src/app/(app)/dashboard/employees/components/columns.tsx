@@ -1,23 +1,10 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { EditButton } from "@/modules/shared/EditButton";
+import DropDown from "@/modules/shared/DropDown";
 import { Pathname } from "@/modules/shared/Pathname";
-import { EmployeeData, TransformEmployeeData } from "@/schema/employees";
+import { TransformEmployeeData } from "@/schema/employees";
 import { deleteEmployeeAction } from "@/server_actions/actions/employee";
 import { ColumnDef } from "@tanstack/react-table";
-// import Link from "next/link";
-// import { usePathname } from "next/navigation";
-
-// type EmployeeData = {
-//     id: number;
-//     name: string;
-//     technician: boolean;
-//     his: string;
-//     serviceNo: string;
-//     empServiceId: number;
-//     rankId: number;
-//     unitId: number;
 
 export const columns: ColumnDef<TransformEmployeeData>[] = [
   {
@@ -86,17 +73,18 @@ export const columns: ColumnDef<TransformEmployeeData>[] = [
       const basepath=Pathname({prop:"employees"});
       const employee = row.original;
       return (
-        <div className="flex gap-2 justify-center">
+        <div className="flex flex-col items-center">
           {/* <Button variant={"link"} asChild>
             <Link href={basePath + "/" + employee.id}>Edit</Link>
           </Button> */}
-          <EditButton prop={{id:employee.id}} basePath={basepath}/>
+          <DropDown name={{id:employee.id}} deletefunc={deleteEmployeeAction} basepath={basepath}/>
+          {/* <EditButton prop={{id:employee.id}} basePath={basepath}/>
           <Button
             onClick={() => deleteEmployeeAction(employee.id)}
             variant={"destructive"}
           >
             Delete
-          </Button>
+          </Button> */}
         </div>
       );
     },

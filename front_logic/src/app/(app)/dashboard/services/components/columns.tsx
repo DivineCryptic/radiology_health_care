@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import DropDown from "@/modules/shared/DropDown";
 import { EditButton } from "@/modules/shared/EditButton";
 import { Pathname } from "@/modules/shared/Pathname";
 import { ServiceData } from "@/schema/services";
@@ -56,13 +57,14 @@ export const columns: ColumnDef<ServiceData>[] = [
           {/* <Button variant={"link"} asChild>
             <Link href={basePath + "/" + service.id}>Edit</Link>
           </Button> */}
-          <EditButton prop={{id:service.id}} basePath={basepath}/>
+          <DropDown name={{id:service.id}} deletefunc={deleteServiceAction} basepath={basepath}/>
+          {/* <EditButton prop={{id:service.id}} basePath={basepath}/>
           <Button
             onClick={() => deleteServiceAction(service.id)}
             variant={"destructive"}
           >
             Delete
-          </Button>
+          </Button> */}
         </div>
       );
     },

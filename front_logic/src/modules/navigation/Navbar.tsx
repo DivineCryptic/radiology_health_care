@@ -129,7 +129,7 @@ export function Navbar({ children }: { children?: React.ReactNode }) {
         </div>
       </div>
       <div className="flex flex-col">
-        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+        <header className="flex h-14 items-center gap-4 border-b bg-muted/40  lg:h-[60px] ">
           <Sheet>
             <SheetTrigger asChild>
               <Button
@@ -182,7 +182,7 @@ export function Navbar({ children }: { children?: React.ReactNode }) {
           </DropdownMenu>
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-          <div className="px-10">{children}</div>
+          <div className="">{children}</div>
         </main>
       </div>
     </div>

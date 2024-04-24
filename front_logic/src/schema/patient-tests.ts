@@ -39,8 +39,23 @@ export const formData = z.object({
   startTime: z.string(),
   endTime: z.string(),
 });
+export type TransformPatientTestsData = {
+  id: number;
+  priority: string;
+  status: string;
+  clinicalNote: string;
+  spclInstruction: string;
+  patientInfoId: number;
+  testCategoriesId: number;
+  startTime: Date;
+  endTime: Date;
+  patientName: string;
+  testName: string;
+}
 
 const insertPatientTestsParams = PatientTestsData.omit({ id: true });
 
 export type PatientTestsform = z.infer<typeof formData>;
 export type PatientTestsData = z.infer<typeof PatientTestsData>;
+
+

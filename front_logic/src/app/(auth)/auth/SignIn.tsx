@@ -18,27 +18,25 @@ import { signInForm } from "@/inferedTypes";
 import { signInSchema } from "@/formSchemas";
 import { useFormStatus } from "react-dom";
 
-
-
 const SignIn = () => {
-  const router = useRouter()
-  
+  const router = useRouter();
+
   const form = useForm<signInForm>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
       username: "",
       password: "",
-     
     },
   });
   const handleSubmit = async (values: signInForm) => {
-    console.log(values)
     try {
+      localStorage.setItem("username", values.username);
+      localStorage.setItem("password", values.password);
+
       await SignedInUser(values);
-      router.push("/dashboard")
-      
+      router.push("/dashboard");
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
   return (
@@ -94,7 +92,7 @@ const SignIn = () => {
               );
             }}
           /> */}
-          <Btn/>
+          <Btn />
         </form>
       </Form>
     </main>

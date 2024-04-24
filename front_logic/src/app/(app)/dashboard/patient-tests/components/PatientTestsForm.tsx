@@ -32,22 +32,24 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { TestCategoryData } from "@/schema/testcategory";
 import { PatientData } from "@/schema/patients";
-import {
-  getAllPatientsData,
-  getChildTestCategories,
-} from "@/server_actions/(get-requests)/client/clientside";
+
 import { RefreshCcwDot } from "lucide-react";
 import { createPatientTestsAction } from "@/server_actions/actions/patient-tests";
 
-const PatientTestsForm = ({ authtoken }: { authtoken?: string }) => {
+const PatientTestsForm = ({
+  patients,
+  activePatient,
+  tests,
+}: {
+  patients: PatientData[];
+  activePatient?: PatientData | null;
+  tests: TestCategoryData[];
+}) => {
   const { errors, hasErrors, handleChange, setErrors } =
     useValidatedForm<PatientTestsData>(formData);
 
-  const [getData, setGetData] = useState<boolean>(false);
-  const [gotChildrenCategory, setGotChildrenCategory] = useState<
-    TestCategoryData[]
-  >([]);
-  const [gotPatients, setGotPatients] = useState<PatientData[]>([]);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [token, setToken] = useState("");
 
   const form = useForm<PatientTestsform>({
     resolver: zodResolver(formData),
@@ -65,6 +67,7 @@ const PatientTestsForm = ({ authtoken }: { authtoken?: string }) => {
 
   const editing = !form.formState.isValid;
 
+  const [childTests, setChildTests] = useState<TestCategoryData[]>([]);
   const handleSubmit = async (data: PatientTestsform) => {
     try {
       const payload = {
@@ -77,44 +80,31 @@ const PatientTestsForm = ({ authtoken }: { authtoken?: string }) => {
         patientInfoId: Number(data.patientInfoId),
         testCategoriesId: Number(data.testCategoriesId),
       };
-      
-    payload.startTime = `${payload.startTime}:00.000Z`
-    payload.endTime = `${payload.endTime}:00.000Z`
 
-    console.log(payload)
-     
+      payload.startTime = `${selectedDate}T${payload.startTime}:00.000Z`;
+      payload.endTime = `${selectedDate}T${payload.endTime}:00.000Z`;
 
-        await createPatientTestsAction(payload);
+      await createPatientTestsAction(payload);
     } catch (e) {
       console.log(e);
     }
   };
 
   useEffect(() => {
-    if (getData === true) {
-      const fetchPatients = async () => {
-        const patients = await getAllPatientsData(authtoken);
-        setGotPatients(patients);
-      };
-      const fetchCategories = async () => {
-        const categories = await getChildTestCategories(authtoken);
-        setGotChildrenCategory(categories);
-      };
-      fetchPatients();
-      fetchCategories();
+    const storedDate = localStorage.getItem("selectedDate");
+
+    if (storedDate) {
+      setSelectedDate(storedDate);
     }
-  });
+  }, []);
 
   return (
     <div className=" mr-10 ml-5">
+      <div className=" mt-5 rounded-md font-bold text-xl">
+        Date{selectedDate}
+      </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-          <div className="flex justify-end absolute right-10 top-10">
-            <Button onClick={() => setGetData(true)} className="">
-              Get Data
-              <RefreshCcwDot className="w-4 h-4 ml-3" />
-            </Button>
-          </div>
           <div className="flex gap-5">
             <div className="flex-1">
               <FormField
@@ -132,7 +122,7 @@ const PatientTestsForm = ({ authtoken }: { authtoken?: string }) => {
                           <SelectValue placeholder="Select Patient"></SelectValue>
                         </SelectTrigger>
                         <SelectContent>
-                          {gotPatients?.map((patient) => (
+                          {patients?.map((patient) => (
                             <SelectItem
                               key={patient.id}
                               value={patient.id.toString()}
@@ -161,9 +151,9 @@ const PatientTestsForm = ({ authtoken }: { authtoken?: string }) => {
                           <SelectValue placeholder="Select Priority" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="High">High</SelectItem>
-                          <SelectItem value="Medium">Medium</SelectItem>
-                          <SelectItem value="Low">Low</SelectItem>
+                          <SelectItem value="high">High</SelectItem>
+                          <SelectItem value="medium">Medium</SelectItem>
+                          <SelectItem value="low">Low</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -189,7 +179,7 @@ const PatientTestsForm = ({ authtoken }: { authtoken?: string }) => {
                           <SelectValue placeholder="Select Test Category"></SelectValue>
                         </SelectTrigger>
                         <SelectContent>
-                          {gotChildrenCategory?.map((category) => (
+                          {tests?.map((category) => (
                             <SelectItem
                               key={category.id}
                               value={category.id.toString()}
@@ -218,11 +208,12 @@ const PatientTestsForm = ({ authtoken }: { authtoken?: string }) => {
                           <SelectValue placeholder="Select Status" />
                         </SelectTrigger>
                         <SelectContent>
+                          <SelectItem value="pending">Pending</SelectItem>
                           <SelectItem value="appointed">Appointed</SelectItem>
-                          <SelectItem value="rejected">Rejected</SelectItem>
+                          <SelectItem value="cancelled">Cancelled</SelectItem>
                           <SelectItem value="done">Done</SelectItem>
                           <SelectItem value="progressing">
-                            In Progress
+                            Test In Progress
                           </SelectItem>
                         </SelectContent>
                       </Select>
@@ -247,8 +238,9 @@ const PatientTestsForm = ({ authtoken }: { authtoken?: string }) => {
                     <FormControl>
                       <Input
                         placeholder="Enter Start Time"
-                        type="datetime-local"
+                        type="time"
                         {...field}
+                        // Use the stored date
                       />
                     </FormControl>
                     <FormMessage />
@@ -266,7 +258,7 @@ const PatientTestsForm = ({ authtoken }: { authtoken?: string }) => {
                     <FormControl>
                       <Input
                         placeholder="Enter End Time"
-                        type="datetime-local"
+                        type="time"
                         {...field}
                       />
                     </FormControl>

@@ -22,10 +22,7 @@ import {
   TestCategoryData,
   TestCategoryform,
 } from "@/schema/testcategory";
-import {
-  getEquipmentsByClient,
-  getParentTestCategories,
-} from "@/server_actions/(get-requests)/client/clientside";
+
 import { createTestCategoryAction } from "@/server_actions/actions/testcategory";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -34,7 +31,10 @@ import { useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { useForm } from "react-hook-form";
 
-const TestCategoryForm = ({ authtoken }: { authtoken?: string }) => {
+const TestCategoryForm = ({equipments , categories}:{
+  equipments : EquipmentsData[];
+  categories :TestCategoryData[]
+}) => {
   const { errors, hasErrors, setErrors, handleChange } =
     useValidatedForm<TestCategoryData>(formData);
 
@@ -43,13 +43,16 @@ const TestCategoryForm = ({ authtoken }: { authtoken?: string }) => {
   const [gotParentsCategory, setGotParentsCategory] = useState<
     TestCategoryData[]
   >([]);
+  const [token, setToken] = useState("");
 
+  const durations = [15, 30, 45, 60, 75, 90];
   const form = useForm<TestCategoryform>({
     resolver: zodResolver(formData),
     defaultValues: {
       testName: "",
       equipmentId: "null",
       parentTestCategoryId: "",
+      testDuration: "",
     },
   });
   const editing = !form.formState.isValid;
@@ -60,6 +63,7 @@ const TestCategoryForm = ({ authtoken }: { authtoken?: string }) => {
         testName: values.testName,
         equipmentId: Number(values.equipmentId),
         parentTestCategoryId: Number(values.parentTestCategoryId),
+        testDuration: Number(values.testDuration),
       };
       await createTestCategoryAction(payload);
     } catch (e) {
@@ -68,20 +72,6 @@ const TestCategoryForm = ({ authtoken }: { authtoken?: string }) => {
     }
   };
 
-  useEffect(() => {
-    if (getData == true) {
-      const fetchEquipments = async () => {
-        const equipments = await getEquipmentsByClient(authtoken);
-        setGotEquipments(equipments);
-      };
-      const fetchParentTestCategories = async () => {
-        const parentTestCategories = await getParentTestCategories(authtoken);
-        setGotParentsCategory(parentTestCategories);
-      };
-      fetchEquipments();
-      fetchParentTestCategories();
-    }
-  }, [getData, authtoken]);
 
   return (
     <div className="mx-auto px-5">
@@ -112,7 +102,7 @@ const TestCategoryForm = ({ authtoken }: { authtoken?: string }) => {
                         <SelectValue placeholder="Select the equipment"></SelectValue>
                       </SelectTrigger>
                       <SelectContent>
-                        {gotEquipments.map((equipment: EquipmentsData) => (
+                        {equipments.map((equipment: EquipmentsData) => (
                           <SelectItem
                             key={equipment.id}
                             value={equipment.id.toString()}
@@ -127,12 +117,12 @@ const TestCategoryForm = ({ authtoken }: { authtoken?: string }) => {
               )}
             />
             <div className="flex items-end ">
-              <Button
+              <div
                 onClick={() => setGetData(true)}
-                className="rounded-full p-4"
+                className="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-6 rounded-lg hover:cursor-pointer"
               >
                 <RefreshCcwDot className="w-4 h-4" />
-              </Button>
+              </div>
             </div>
           </div>
           <FormField
@@ -150,12 +140,37 @@ const TestCategoryForm = ({ authtoken }: { authtoken?: string }) => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="0">Test Is Parent</SelectItem>
-                      {gotParentsCategory.map((category: TestCategoryData) => (
+                      {categories.map((category: TestCategoryData) => (
                         <SelectItem
                           key={category.id}
                           value={category.id.toString()}
                         >
                           {category.testName}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="testDuration"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Please provide the duration of the test in hours
+                </FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select the duration"></SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      {durations.map((duration) => (
+                        <SelectItem key={duration} value={duration.toString()}>
+                          {duration}
                         </SelectItem>
                       ))}
                     </SelectContent>

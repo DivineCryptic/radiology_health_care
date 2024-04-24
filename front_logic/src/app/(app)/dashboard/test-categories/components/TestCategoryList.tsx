@@ -7,15 +7,19 @@ import { Button } from "@/components/ui/button";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import TestCategoryForm from "./TestCategoryForm";
+import { EquipmentsData } from "@/schema/equipments";
 
 export type TOpenModal = (testCategories?: TestCategoryData) => void;
 
 export default function TestCategoryList({
   testCategories,
-  token
+  equipments,
+  categories,
+
 }: {
-  token?: string;
   testCategories: TestCategoryData[];
+  equipments: EquipmentsData[];
+  categories:TestCategoryData[]
 }) {
   const [open, setOpen] = useState(false);
   const [activeTestCategory, setActiveTestCategory] =
@@ -36,7 +40,7 @@ export default function TestCategoryList({
           activeTestCategory ? "Edit Tests" : "Create Tests"
         }
       >
-        <TestCategoryForm authtoken={token} />
+        <TestCategoryForm  categories={categories} equipments={equipments}/>
       </Modal>
       <div className="absolute right-0 top-0">
         <Button onClick={() => openModal()} variant={"outline"}>

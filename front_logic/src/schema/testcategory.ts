@@ -11,12 +11,14 @@ const TestCategoryData = z.object({
    equipmentId: z.number(),
    
    parentTestCategoryId: z.number(),
+   testDuration:z.number(),
 });
 
 export const formData = z.object({
     testName : z.string(),
     equipmentId: z.string(),
     parentTestCategoryId: z.string(),
+    testDuration:z.string(),
 })
 
 export const insertTestCategoryParams = TestCategoryData.omit({ id: true });

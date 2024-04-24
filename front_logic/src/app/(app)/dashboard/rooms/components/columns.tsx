@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import DropDown from "@/modules/shared/DropDown";
 import { EditButton } from "@/modules/shared/EditButton";
 import { Pathname } from "@/modules/shared/Pathname";
 import { RoomData } from "@/schema/rooms";
@@ -57,17 +58,18 @@ cell:(info)=>(
       const basepath=Pathname({prop:"rooms"});
       const room = row.original;
       return (
-        <div className="flex gap-2 justify-center">
+        <div className="flex flex-col items-center">
           {/* <Button variant={"link"} asChild>
             <Link href={basePath + "/" + room.id}>Edit</Link>
           </Button> */}
-          <EditButton prop={{id:room.id}} basePath={basepath}/>
+          <DropDown name={{id:room.id}} deletefunc={deleteRoomAction} basepath={basepath}/>
+          {/* <EditButton prop={{id:room.id}} basePath={basepath}/>
           <Button
             onClick={() => deleteRoomAction(room.id)}
             variant={"destructive"}
           >
             Delete
-          </Button>
+          </Button> */}
         </div>
       );
     },

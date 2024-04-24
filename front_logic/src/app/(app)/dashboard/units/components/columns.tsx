@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import DropDown from "@/modules/shared/DropDown";
 import { EditButton } from "@/modules/shared/EditButton";
 import { Pathname } from "@/modules/shared/Pathname";
 import { TransformUnitData } from "@/schema/units";
@@ -58,14 +59,15 @@ cell:({row})=>{
             {/* <Button variant={"link"} asChild>
                 <Link href={basePath+"/"+unit.id}>Edit</Link>
             </Button> */}
-            <EditButton prop={{id:unit.id}} basePath={basepath}/>
+            <DropDown name={{id:unit.id}} deletefunc={deleteUnitAction} basepath={basepath}/>
+            {/* <EditButton prop={{id:unit.id}} basePath={basepath}/>
             
             <Button 
             onClick={()=>deleteUnitAction(unit.id)}
             variant={"destructive"}
             >
                 Delete
-            </Button>
+            </Button> */}
         </div>
     );
 }}

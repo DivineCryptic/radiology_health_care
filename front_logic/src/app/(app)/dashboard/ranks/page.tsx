@@ -50,7 +50,10 @@ const Ranks = async () => {
 
   return (
     <Suspense fallback={<Loading />}>
-      {/* getting the data for the services and ranks for and displaying it in the form a table for the ranks */}
+      <div>
+
+      </div>
+
       {/* <RankList ranks={ranks} services={services} /> */}
       
       <RankList ranks={transformedRanks} services={services} />

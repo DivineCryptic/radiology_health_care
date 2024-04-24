@@ -21,7 +21,7 @@ export default function EmployeeList({
   ranks,
   units,
 }: {
-  token?: string;
+  token?: Promise<string | undefined>
   employees: TransformEmployeeData[];
   services: ServiceData[];
   ranks: RankData[];
