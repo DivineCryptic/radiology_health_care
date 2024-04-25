@@ -35,6 +35,9 @@ import { PatientData } from "@/schema/patients";
 
 import { createPatientTestsAction } from "@/server_actions/actions/patient-tests";
 
+const date=new Date();
+const dateString=`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+localStorage.setItem('date', dateString);
 const PatientTestsForm = ({
   patients,
   activePatient,
@@ -44,6 +47,8 @@ const PatientTestsForm = ({
   activePatient?: PatientData | null;
   tests: TestCategoryData[];
 }) => {
+  
+
   const { errors, hasErrors, handleChange, setErrors } =
     useValidatedForm<PatientTestsData>(formData);
 
@@ -52,7 +57,6 @@ const PatientTestsForm = ({
   const form = useForm<PatientTestsform>({
     resolver: zodResolver(formData),
     defaultValues: {
-      endTime: "",
       startTime: "",
       status: "",
       priority: "",
@@ -68,14 +72,13 @@ const PatientTestsForm = ({
   const handleSubmit = async (data: PatientTestsform) => {
     try {
       const payload = {
-        endTime: new Date(`${selectedDate}T${data.endTime}:00.000Z`),
-        startTime: new Date(`${selectedDate}T${data.startTime}:00.000Z`),
         status: data.status,
         priority: data.priority,
         clinicalNote: data.clinicalNote,
         spclInstruction: data.spclInstruction,
         patientInfoId: Number(data.patientInfoId),
         testCategoriesId: Number(data.testCategoriesId),
+        startTime: new Date(`${selectedDate}T${data.startTime}:00.000Z`),
       };
 
       await createPatientTestsAction(payload);
@@ -85,7 +88,7 @@ const PatientTestsForm = ({
   };
 
   useEffect(() => {
-    const storedDate = localStorage.getItem("selectedDate");
+    const storedDate = localStorage.getItem("date");
 
     if (storedDate) {
       setSelectedDate(storedDate);
@@ -242,25 +245,7 @@ const PatientTestsForm = ({
                 )}
               />
             </div>
-            <div className="flex-1">
-              <FormField
-                control={form.control}
-                name="endTime"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Select the End Time</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Enter End Time"
-                        type="time"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+           
           </div>
 
           <FormField

@@ -18,29 +18,14 @@ interface DataTableToolbarProps<TData> {
   table: Table<TData>;
 }
 
+
+// const formattedDate = dates ? `${dates.split('-')[2]}/${dates.split('-')[1]}/${dates.split('-')[0]}` : '';
+// const date=new Date();
+// const formattedDate = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
 export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
-  //   const [getData, setGetData] = useState<boolean>(false);
-  //   const [gotChildrenCategory, setGotChildrenCategory] = useState<
-  //   TestCategoryData[]
-  // >([]);
-
-  // useEffect(() => {
-  //   if (getData === true) {
-
-  //     const fetchCategories = async () => {
-  //       const categories = await getChildTestCategories(authtoken);
-  //       setGotChildrenCategory(categories);
-  //     };
-  //     fetchCategories();
-  //   }
-  // });
-  // const formattedOptions :any = gotChildrenCategory.map((category) => ({
-  //   label: category.testName,
-  //   value: category.id,
-  // }));
 
   return (
     <div className="flex items-center justify-between">
@@ -49,9 +34,6 @@ export function DataTableToolbar<TData>({
         <Input
           type="date"
           placeholder="Filter Date..."
-          value={
-            (table.getColumn("startTime")?.getFilterValue() as string) ?? ""
-          }
           onChange={(event) => {
             table.getColumn("startTime")?.setFilterValue(event.target.value);
             localStorage.setItem("selectedDate", event.target.value);

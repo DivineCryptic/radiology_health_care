@@ -26,7 +26,7 @@ const PatientTestsData = z.object({
   patientInfoId: z.number(),
   testCategoriesId: z.number(),
   startTime: z.date(),
-  endTime: z.date(),
+ 
 });
 
 export const formData = z.object({
@@ -37,7 +37,7 @@ export const formData = z.object({
   patientInfoId: z.string(),
   testCategoriesId: z.string(),
   startTime: z.string(),
-  endTime: z.string(),
+ 
 });
 export type TransformPatientTestsData = {
   id: number;
