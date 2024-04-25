@@ -1,11 +1,13 @@
 "use server";
 
-import { insertPatientTestsParams } from "@/schema/patient-tests";
+import { InsertEquipmentMappingsParams } from "@/schema/equipmentmapping";
 import axios from "axios";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
-const PatientTestsUrl = process.env.BACKEND_URL + "/api/patient-test-timings";
+const equipmentsMappingUrl =
+  process.env.BACKEND_URL + "/api/technician-equipment-mappings";
+
 const userAuthToken = cookies().get("authToken")?.value;
 const bearerToken = `Bearer ${userAuthToken}`;
 
@@ -19,34 +21,40 @@ const handleErrors = (e: unknown) => {
   return errMsg;
 };
 
-const revalidatePatientTests = () => revalidatePath("/patient-tests");
+const revalidateEquipmentMapping = () => {
+  revalidatePath("/technician-equipment-mappings");
+};
 
-export const createPatientTestsAction = async (patientTests: insertPatientTestsParams) => {
+export const createEquipmentMappingAction = async (
+  equipmentMapping: InsertEquipmentMappingsParams
+) => {
   try {
-    const response = await axios.post(PatientTestsUrl, patientTests, {
+    const response = await axios.post(equipmentsMappingUrl, equipmentMapping, {
       headers: {
         Authorization: bearerToken,
       },
     });
+
     if (response.status === 201) {
-      revalidatePatientTests();
-      return console.log("Patient Tests added successfully");
+      revalidateEquipmentMapping();
+
+      return console.log("Equipment Mapping added successfully");
     }
   } catch (e) {
     return handleErrors(e);
   }
 };
 
-export const deletePatientTestsAction = async (id: number) => {
+export const deleteEquipmentMappingAction = async (id: number) => {
   try {
-    const response = await axios.delete(PatientTestsUrl + "/" + id, {
+    const response = await axios.delete(equipmentsMappingUrl + "/" + id, {
       headers: {
         Authorization: bearerToken,
       },
     });
     if (response.status === 204) {
-      revalidatePatientTests();
-      return console.log("Patient Tests deleted successfully");
+      revalidateEquipmentMapping();
+      return console.log("Equipment Mapping deleted successfully");
     }
   } catch (e) {
     return handleErrors(e);

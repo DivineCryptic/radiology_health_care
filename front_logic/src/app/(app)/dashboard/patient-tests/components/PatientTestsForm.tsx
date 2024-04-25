@@ -33,7 +33,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { TestCategoryData } from "@/schema/testcategory";
 import { PatientData } from "@/schema/patients";
 
-import { RefreshCcwDot } from "lucide-react";
 import { createPatientTestsAction } from "@/server_actions/actions/patient-tests";
 
 const PatientTestsForm = ({
@@ -49,7 +48,6 @@ const PatientTestsForm = ({
     useValidatedForm<PatientTestsData>(formData);
 
   const [selectedDate, setSelectedDate] = useState("");
-  const [token, setToken] = useState("");
 
   const form = useForm<PatientTestsform>({
     resolver: zodResolver(formData),
@@ -67,12 +65,11 @@ const PatientTestsForm = ({
 
   const editing = !form.formState.isValid;
 
-  const [childTests, setChildTests] = useState<TestCategoryData[]>([]);
   const handleSubmit = async (data: PatientTestsform) => {
     try {
       const payload = {
-        endTime: data.endTime,
-        startTime: data.startTime,
+        endTime: new Date(`${selectedDate}T${data.endTime}:00.000Z`),
+        startTime: new Date(`${selectedDate}T${data.startTime}:00.000Z`),
         status: data.status,
         priority: data.priority,
         clinicalNote: data.clinicalNote,
@@ -80,9 +77,6 @@ const PatientTestsForm = ({
         patientInfoId: Number(data.patientInfoId),
         testCategoriesId: Number(data.testCategoriesId),
       };
-
-      payload.startTime = `${selectedDate}T${payload.startTime}:00.000Z`;
-      payload.endTime = `${selectedDate}T${payload.endTime}:00.000Z`;
 
       await createPatientTestsAction(payload);
     } catch (e) {
@@ -101,7 +95,7 @@ const PatientTestsForm = ({
   return (
     <div className=" mr-10 ml-5">
       <div className=" mt-5 rounded-md font-bold text-xl">
-        Date{selectedDate}
+        Date : {selectedDate}
       </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">

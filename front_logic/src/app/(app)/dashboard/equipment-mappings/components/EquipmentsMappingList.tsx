@@ -9,13 +9,19 @@ import { EquipmentsMappingData } from "@/schema/equipmentmapping";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import EquipmentsMappingForm from "./EquipmentsMappingForm";
+import { EmployeeData } from "@/schema/employees";
+import { EquipmentsData } from "@/schema/equipments";
 
 export type TOpenModal = (equipmentMapping?: EquipmentsMappingData) => void;
 
 export default function EquipmentsMappingList({
   equipmentsMapping,
+  employees,
+  equipments
 }: {
   equipmentsMapping: EquipmentsMappingData[];
+  employees: EmployeeData[];
+  equipments: EquipmentsData[];
 }) {
   const [open, setOpen] = useState(false);
   const [activeEquipmentMapping, setActiveEquipmentMapping] =
@@ -37,7 +43,7 @@ export default function EquipmentsMappingList({
           activeEquipmentMapping ? "Edit Equipments Map" : "Create Equipments Map"
         }
       >
-        <EquipmentsMappingForm  />
+        <EquipmentsMappingForm equipments={equipments} employees={employees} />
       </Modal>
       <div className="absolute right-0 top-0">
         <Button onClick={() => openModal()} variant={"outline"}>

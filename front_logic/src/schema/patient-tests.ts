@@ -55,6 +55,8 @@ export type TransformPatientTestsData = {
 
 const insertPatientTestsParams = PatientTestsData.omit({ id: true });
 
+export type insertPatientTestsParams = z.infer<typeof insertPatientTestsParams>;
+
 export type PatientTestsform = z.infer<typeof formData>;
 export type PatientTestsData = z.infer<typeof PatientTestsData>;
 

@@ -41,10 +41,8 @@ const EmployeeForm = ({
   authtoken?: Promise<string | undefined>;
   employee?: EmployeeData | null;
   services: ServiceData[];
-
   ranks: RankData[];
   units: UnitData[];
-
 }) => {
   const { errors, hasErrors, setErrors, handleChange } =
     useValidatedForm<EmployeeData>(formData);
@@ -80,7 +78,7 @@ const EmployeeForm = ({
 
 
   const handleRankandUnitFilter = (value: string) => {
-    console.log(value)
+
 
       const filteredRanks = ranks.filter((rank) => rank.empServiceId === Number(value));
       setFilterRanks(filteredRanks);
@@ -88,7 +86,6 @@ const EmployeeForm = ({
       setFilterUnits(filteredUnits);
 
   }
-
 
   const handleSubmit = async (data: Employeeform) => {
     try {
