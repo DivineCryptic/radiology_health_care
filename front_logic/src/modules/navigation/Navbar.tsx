@@ -55,6 +55,7 @@ const SidebarLink = ({
   return (
     <Link
       href={link.href}
+      key={link.title}
       className={`group transition-colors p-2 inline-block hover:bg-popover hover:text-primary text-muted-foreground text-xs hover:shadow rounded-md w-full${
         active ? " text-primary bg:popover font-semibold" : ""
       }`}
@@ -162,12 +163,15 @@ export function Navbar({ children }: { children?: React.ReactNode }) {
               </div>
             </form> */}
           </div>
-          <DropdownMenu>
+          <DropdownMenu >
             <DropdownMenuTrigger asChild>
+              <div className="pt-5 pr-5">
+
               <Button variant="secondary" size="icon" className="rounded-full">
                 <CircleUser className="h-5 w-5" />
                 <span className="sr-only">Toggle user menu</span>
               </Button>
+              </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-30">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
