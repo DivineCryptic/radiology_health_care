@@ -26,6 +26,7 @@ export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
+  
 
   return (
     <div className="flex items-center justify-between">
@@ -33,10 +34,12 @@ export function DataTableToolbar<TData>({
         {/* Make this into a filter for date  */}
         <Input
           type="date"
+          
           placeholder="Filter Date..."
           onChange={(event) => {
-            table.getColumn("startTime")?.setFilterValue(event.target.value);
-            localStorage.setItem("selectedDate", event.target.value);
+            const selectedDate = event.target.value;
+            table.getColumn("startTime")?.setFilterValue(selectedDate);
+            localStorage.setItem("selectedDate", selectedDate);
           }}
           className="h-8 w-[150px] lg:w-[250px]"
         />

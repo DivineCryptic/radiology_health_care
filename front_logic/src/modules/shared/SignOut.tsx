@@ -10,7 +10,7 @@ const SignOut = () => {
     const router = useRouter()
     const form = useForm()
     const onSubmit = async () => {
-
+        localStorage.clear();
         await deleteCookie()
         router.refresh()
     }
