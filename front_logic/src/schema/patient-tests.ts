@@ -1,3 +1,4 @@
+import { CLIENT_STATIC_FILES_RUNTIME_POLYFILLS } from "next/dist/shared/lib/constants";
 import { z } from "zod";
 
 // {
@@ -17,7 +18,21 @@ import { z } from "zod";
 //     "lastModifiedDate": "2024-04-12T08:31:31.355Z"
 //   }
 
+
 const PatientTestsData = z.object({
+  id: z.number(),
+  priority: z.string(),
+  status: z.string(),
+  clinicalNote: z.string(),
+  spclInstruction: z.string(),
+  patientInfoId: z.number(),
+  testCategoriesId: z.number(),
+  startTime: z.date(),
+  endTime : z.date()
+ 
+})
+
+const PatientTestsDataForm = z.object({
   id: z.number(),
   priority: z.string(),
   status: z.string(),
@@ -39,6 +54,8 @@ export const formData = z.object({
   startTime: z.string(),
  
 });
+
+
 export type TransformPatientTestsData = {
   id: number;
   priority: string;
@@ -53,11 +70,44 @@ export type TransformPatientTestsData = {
   testName: string;
 }
 
-const insertPatientTestsParams = PatientTestsData.omit({ id: true });
+export const TransformedPatientTests = z.object({
+  id: z.number(),
+  priority: z.string().nullable(),
+  status: z.string().nullable(),
+  clinicalNote: z.string().nullable(),
+  spclInstruction: z.string().nullable(),
+  patientInfoId: z.number(),
+  testCategoriesId: z.number(),
+  startTime: z.string(),
+  endTime : z.string(),
+  patientName: z.string(),
+  testName: z.string(),
+});
+const insertPatientTestsParams = PatientTestsDataForm.omit({ id: true });
 
+const updatePatientTestStatus = z.object({
+  id : z.number(),
+  status: z.string(),
+  patientInfoId: z.number(),
+  testCategoriesId: z.number(),
+  startTime: z.string(),
+})
+
+const updatePatientTestsPriority = z.object({
+  id : z.number(),
+  priority: z.string(),
+  patientInfoId: z.number(),
+  testCategoriesId: z.number(),
+  startTime: z.string() 
+})
+
+
+export type UpdatePatientTestsPriority = z.infer<typeof updatePatientTestsPriority>
+export type UpdatePatientTestStatus = z.infer<typeof updatePatientTestStatus>;
 export type insertPatientTestsParams = z.infer<typeof insertPatientTestsParams>;
 
 export type PatientTestsform = z.infer<typeof formData>;
 export type PatientTestsData = z.infer<typeof PatientTestsData>;
+export type PatientTestsDataForm = z.infer<typeof PatientTestsDataForm>;
 
 

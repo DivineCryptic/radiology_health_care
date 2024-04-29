@@ -26,7 +26,7 @@ import { useBackPath } from "../../../../../modules/shared/BackButton";
 import { DialogClose } from "@/components/ui/dialog";
 import {
   formData,
-  PatientTestsData,
+  PatientTestsDataForm,
   PatientTestsform,
 } from "@/schema/patient-tests";
 import { Textarea } from "@/components/ui/textarea";
@@ -50,7 +50,7 @@ const PatientTestsForm = ({
   
 
   const { errors, hasErrors, handleChange, setErrors } =
-    useValidatedForm<PatientTestsData>(formData);
+    useValidatedForm<PatientTestsDataForm>(formData);
 
   const [selectedDate, setSelectedDate] = useState("");
 
@@ -207,7 +207,6 @@ const PatientTestsForm = ({
                         <SelectContent>
                           <SelectItem value="pending">Pending</SelectItem>
                           <SelectItem value="appointed">Appointed</SelectItem>
-                          <SelectItem value="cancelled">Cancelled</SelectItem>
                           <SelectItem value="done">Done</SelectItem>
                           <SelectItem value="progressing">
                             Test In Progress
@@ -232,7 +231,7 @@ const PatientTestsForm = ({
                     <FormLabel>
                       Please enter the date and time for your tests
                     </FormLabel>
-                    <FormControl>
+                    <FormControl className="w-56">
                       <Input
                         placeholder="Enter Start Time"
                         type="time"

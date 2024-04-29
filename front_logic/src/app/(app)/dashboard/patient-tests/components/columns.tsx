@@ -9,6 +9,7 @@ import { PatientTestsData } from "@/schema/patient-tests";
 import { deletePatientTestsAction } from "@/server_actions/actions/patient-tests";
 import { ColumnDef } from "@tanstack/react-table";
 import { priorities, statuses } from "../data/data";
+import { DataTableRowActions } from "./data-table-row-actions";
 // import Link from "next/link";
 // import { usePathname } from "next/navigation";
 
@@ -97,7 +98,7 @@ export const columns: ColumnDef<PatientTestsData>[] = [
     cell: ({ row }) => {
       const value:string = row.getValue("startTime");
       const valueDate = new Date(value);
-      const formattedDate = valueDate.toLocaleString('en-IN', {day: '2-digit',month:"short", hour: '2-digit', minute: '2-digit', hour12: true })
+      const formattedDate = valueDate.toLocaleString('en', {day: '2-digit',month:"short", hour: '2-digit', minute: '2-digit', hour12: true })
       if (!value) {
         return null;
       }
@@ -114,7 +115,7 @@ export const columns: ColumnDef<PatientTestsData>[] = [
     cell: ({ row }) => {
       const value:string = row.getValue("endTime");
       const valueDate = new Date(value);
-      const formattedDate = valueDate.toLocaleString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true })
+      const formattedDate = valueDate.toLocaleString('en', { hour: '2-digit', minute: '2-digit', hour12: true })
     if (!value) {
         return null;
       }
@@ -146,24 +147,6 @@ export const columns: ColumnDef<PatientTestsData>[] = [
         <h1>Actions</h1>
       </div>
     ),
-    cell: ({ row }) => {
-      // const pathname = usePathname();
-      // const basePath = pathname.includes("patient-tests")
-      //   ? pathname
-      //   : pathname + "/patient-tests/";
-      const basepath = Pathname({ prop: "patient-tests" });
-      const patientTests = row.original;
-
-      return (
-        <div>
-          {/* <Button variant={"link"} asChild>
-                    <Link href={basePath + "/" + patientTests.id}>Edit</Link> 
-                </Button> */}
-
-                <DropDown name={{id:patientTests.id}} deletefunc={deletePatientTestsAction} basepath={basepath}/>
-            </div>
-        )
-
-    },
+    cell: ({ row }) => <DataTableRowActions row={row}/>
   },
 ];
