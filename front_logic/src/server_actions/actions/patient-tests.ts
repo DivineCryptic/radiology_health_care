@@ -3,6 +3,7 @@
 import {
   insertPatientTestsParams,
   UpdatePatientTestsPriority,
+  UpdatePatientTestStartTime,
   UpdatePatientTestStatus,
 } from "@/schema/patient-tests";
 import axios from "axios";
@@ -102,3 +103,25 @@ export const patchPatientTestPriorityAction = async (
     return handleErrors(e);
   }
 };
+
+export const patchPatientTestsStartTime = async (
+  patientTestStartTime: UpdatePatientTestStartTime
+) => {
+  try {
+    const response = await axios.patch(
+      PatientTestsUrl + "/" + patientTestStartTime.id,
+      patientTestStartTime,
+      {
+        headers: {
+          Authorization: bearerToken,
+        },
+      }
+    );
+    if (response.status === 200) {
+      revalidatePatientTests();
+      return console.log("Patient Tests start time updated successfully");
+    }
+  } catch (e) {
+    return handleErrors(e);
+  }
+}

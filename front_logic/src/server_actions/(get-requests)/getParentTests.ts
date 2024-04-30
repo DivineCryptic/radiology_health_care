@@ -2,7 +2,7 @@ import axios from "axios";
 import { cookies } from "next/headers";
 
 export const getParentTests = async() => {
-    const getParentTestCategoriesUrl = process.env.NEXT_PUBLIC_BACKEND_URL + "/api/test-categories?parentTestCategoryId.specified=false";
+    const getParentTestCategoriesUrl = process.env.BACKEND_URL + "/api/test-categories?parentTestCategoryId.specified=false";
     
     const userAuthToken = cookies().get("authToken")?.value;
     const bearerToken = `Bearer ${userAuthToken}`;

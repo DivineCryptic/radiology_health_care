@@ -36,6 +36,7 @@ export function DataTableToolbar<TData>({
       const today = new Date()
       
       setDate(today)
+      localStorage.setItem("selectedDate",format(today, "yyyy-MM-dd"))
       const templatedDate = format(today, "yyyy-MM-dd");
       table.getColumn("startTime")?.setFilterValue(templatedDate);
     }
@@ -66,9 +67,11 @@ export function DataTableToolbar<TData>({
               
               selected={date}
               onSelect={(event: any) => {
+
+                
                 const templatedDate = format(event, "yyyy-MM-dd");
                 setDate(event);
-                console.log(templatedDate)
+                localStorage.setItem("selectedDate",templatedDate )
                 table.getColumn("startTime")?.setFilterValue(templatedDate);
               }}
               initialFocus

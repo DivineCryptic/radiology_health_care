@@ -30,9 +30,7 @@ const SignIn = () => {
   });
   const handleSubmit = async (values: signInForm) => {
     try {
-      localStorage.setItem("username", values.username);
-      localStorage.setItem("password", values.password);
-
+  
       await SignedInUser(values);
       router.push("/dashboard");
     } catch (error) {

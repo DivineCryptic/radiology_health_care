@@ -101,6 +101,15 @@ const updatePatientTestsPriority = z.object({
   startTime: z.string() 
 })
 
+const updatePatientTestStartTime = z.object({
+  id : z.number(),
+  startTime: z.string(),
+  patientInfoId: z.number(),
+  testCategoriesId: z.number(),
+})
+
+export type UpdatePatientTestStartTime = z.infer<typeof updatePatientTestStartTime>
+
 
 export type UpdatePatientTestsPriority = z.infer<typeof updatePatientTestsPriority>
 export type UpdatePatientTestStatus = z.infer<typeof updatePatientTestStatus>;

@@ -1,6 +1,8 @@
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -25,6 +27,7 @@ export default function Modal({
           <DialogTitle>{title ?? "Modal"}</DialogTitle>
         </DialogHeader>
         <div className={`px-5 pb-5 ${className}`}>{children}</div>
+    
       </DialogContent>
     </Dialog>
   );

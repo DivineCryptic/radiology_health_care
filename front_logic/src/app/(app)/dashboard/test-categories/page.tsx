@@ -12,6 +12,7 @@ export default async function TestCategoryPage() {
         <div className="flex justify-between">
           <h1 className="font-semibold text-2xl my-2">Test Categories</h1>
         </div>
+        Hello
         <TestCategories />
       </div>
     </main>
@@ -26,7 +27,6 @@ const TestCategories = async () => {
 
   return (
     <Suspense fallback={<Loading />}>
-      {/* getting the data for the services and ranks for and displaying it in the form a table for the ranks */}
       <TestCategoryList testCategories={testcategories} equipments={equipments} categories={parentCategory} />
     </Suspense>
   );

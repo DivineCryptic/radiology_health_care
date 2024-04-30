@@ -37,15 +37,15 @@ export const Roomform = ({
 
   const editing = !form.formState.isValid;
 
-  const handleSubmit = async (values: RoomForm) => {
+  const handleSubmit = (values: RoomForm) => {
     try {
       const payload = {
         roomNo: Number(values.roomNo),
-      }
-      console.log(payload );
-      await createRoomAction(payload);
+      };
+      console.log(payload);
+      createRoomAction(payload);
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   };
 

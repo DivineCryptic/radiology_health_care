@@ -34,7 +34,7 @@ import { TestCategoryData } from "@/schema/testcategory";
 import { PatientData } from "@/schema/patients";
 
 import { createPatientTestsAction } from "@/server_actions/actions/patient-tests";
-
+import { format } from "date-fns";
 
 const PatientTestsForm = ({
   patients,
@@ -45,12 +45,18 @@ const PatientTestsForm = ({
   activePatient?: PatientData | null;
   tests: TestCategoryData[];
 }) => {
-  
-
   const { errors, hasErrors, handleChange, setErrors } =
     useValidatedForm<PatientTestsDataForm>(formData);
+  const formattedDate = format(new Date(), "yyyy-MM-dd");
 
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState<string | null>(
+    formattedDate
+  );
+
+  const clientSelection = localStorage.getItem("selectedDate");
+  if (selectedDate !== clientSelection) {
+    setSelectedDate(clientSelection);
+  }
 
   const form = useForm<PatientTestsform>({
     resolver: zodResolver(formData),
@@ -84,14 +90,6 @@ const PatientTestsForm = ({
       console.log(e);
     }
   };
-
-  useEffect(() => {
-    const storedDate = localStorage.getItem("date");
-
-    if (storedDate) {
-      setSelectedDate(storedDate);
-    }
-  }, []);
 
   return (
     <div className=" mr-10 ml-5">
@@ -242,7 +240,6 @@ const PatientTestsForm = ({
                 )}
               />
             </div>
-           
           </div>
 
           <FormField
