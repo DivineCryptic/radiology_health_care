@@ -29,8 +29,17 @@ import {
   formData,
 } from "@/schema/equipmentmapping";
 import { DialogClose } from "@/components/ui/dialog";
+import { EquipmentsData } from "@/schema/equipments";
+import { EmployeeData } from "@/schema/employees";
+import { createEquipmentMappingAction } from "@/server_actions/actions/equipmentsmapping";
 
-const EquipmentsMappingForm = () => {
+const EquipmentsMappingForm = ({
+  equipments,
+  employees,
+}: {
+  equipments: EquipmentsData[];
+  employees: EmployeeData[];
+}) => {
   const { errors, hasErrors, handleChange, setErrors } =
     useValidatedForm<EquipmentsMappingData>(formData);
   const form = useForm<EquipmentsMappingform>({
@@ -47,11 +56,13 @@ const EquipmentsMappingForm = () => {
   const handleSubmit = async (data: EquipmentsMappingform) => {
     try {
       const payload = {
-        dateTime: data.dateTime,
+        dateTime: `${data.dateTime}:00.000Z`,
         equipmentId: Number(data.equipmentId),
         employeeId: Number(data.employeeId),
       };
       console.log(payload);
+
+      await createEquipmentMappingAction(payload);
     } catch (e) {
       console.log(e);
     }
@@ -60,18 +71,22 @@ const EquipmentsMappingForm = () => {
     <div>
       <Form {...form}>
         <form className="space-y-4" onSubmit={form.handleSubmit(handleSubmit)}>
-            <FormField 
-                control={form.control}
-                name="dateTime"
-                render={({ field }) => (
-                    <FormItem>
-                        <FormLabel> Date Time</FormLabel>
-                        <FormControl>
-                            <Input placeholder="Enter the date time" type="datetime-local" {...field} />
-                        </FormControl>
-                    </FormItem>
-                )}
-            />
+          <FormField
+            control={form.control}
+            name="dateTime"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel> Date Time</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter the date time"
+                    type="datetime-local"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="equipmentId"
@@ -79,7 +94,21 @@ const EquipmentsMappingForm = () => {
               <FormItem>
                 <FormLabel> Equipment</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter the equipment Id" {...field} />
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select the equipment"></SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      {equipments.map((equipment: EquipmentsData) => (
+                        <SelectItem
+                          key={equipment.id}
+                          value={equipment.id.toString()}
+                        >
+                          {equipment.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </FormControl>
               </FormItem>
             )}
@@ -91,7 +120,21 @@ const EquipmentsMappingForm = () => {
               <FormItem>
                 <FormLabel> Employee</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter the employee Id" {...field} />
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Employee"></SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      {employees?.map((employee) => (
+                        <SelectItem
+                          key={employee.id}
+                          value={employee.id.toString()}
+                        >
+                          {employee.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </FormControl>
               </FormItem>
             )}

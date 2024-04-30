@@ -26,15 +26,15 @@ import { useBackPath } from "../../../../../modules/shared/BackButton";
 import { DialogClose } from "@/components/ui/dialog";
 import {
   formData,
-  PatientTestsData,
+  PatientTestsDataForm,
   PatientTestsform,
 } from "@/schema/patient-tests";
 import { Textarea } from "@/components/ui/textarea";
 import { TestCategoryData } from "@/schema/testcategory";
 import { PatientData } from "@/schema/patients";
 
-import { RefreshCcwDot } from "lucide-react";
 import { createPatientTestsAction } from "@/server_actions/actions/patient-tests";
+
 
 const PatientTestsForm = ({
   patients,
@@ -45,16 +45,16 @@ const PatientTestsForm = ({
   activePatient?: PatientData | null;
   tests: TestCategoryData[];
 }) => {
+  
+
   const { errors, hasErrors, handleChange, setErrors } =
-    useValidatedForm<PatientTestsData>(formData);
+    useValidatedForm<PatientTestsDataForm>(formData);
 
   const [selectedDate, setSelectedDate] = useState("");
-  const [token, setToken] = useState("");
 
   const form = useForm<PatientTestsform>({
     resolver: zodResolver(formData),
     defaultValues: {
-      endTime: "",
       startTime: "",
       status: "",
       priority: "",
@@ -67,22 +67,17 @@ const PatientTestsForm = ({
 
   const editing = !form.formState.isValid;
 
-  const [childTests, setChildTests] = useState<TestCategoryData[]>([]);
   const handleSubmit = async (data: PatientTestsform) => {
     try {
       const payload = {
-        endTime: data.endTime,
-        startTime: data.startTime,
         status: data.status,
         priority: data.priority,
         clinicalNote: data.clinicalNote,
         spclInstruction: data.spclInstruction,
         patientInfoId: Number(data.patientInfoId),
         testCategoriesId: Number(data.testCategoriesId),
+        startTime: new Date(`${selectedDate}T${data.startTime}:00.000Z`),
       };
-
-      payload.startTime = `${selectedDate}T${payload.startTime}:00.000Z`;
-      payload.endTime = `${selectedDate}T${payload.endTime}:00.000Z`;
 
       await createPatientTestsAction(payload);
     } catch (e) {
@@ -91,7 +86,7 @@ const PatientTestsForm = ({
   };
 
   useEffect(() => {
-    const storedDate = localStorage.getItem("selectedDate");
+    const storedDate = localStorage.getItem("date");
 
     if (storedDate) {
       setSelectedDate(storedDate);
@@ -101,7 +96,7 @@ const PatientTestsForm = ({
   return (
     <div className=" mr-10 ml-5">
       <div className=" mt-5 rounded-md font-bold text-xl">
-        Date{selectedDate}
+        Date : {selectedDate}
       </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
@@ -210,7 +205,6 @@ const PatientTestsForm = ({
                         <SelectContent>
                           <SelectItem value="pending">Pending</SelectItem>
                           <SelectItem value="appointed">Appointed</SelectItem>
-                          <SelectItem value="cancelled">Cancelled</SelectItem>
                           <SelectItem value="done">Done</SelectItem>
                           <SelectItem value="progressing">
                             Test In Progress
@@ -235,7 +229,7 @@ const PatientTestsForm = ({
                     <FormLabel>
                       Please enter the date and time for your tests
                     </FormLabel>
-                    <FormControl>
+                    <FormControl className="w-56">
                       <Input
                         placeholder="Enter Start Time"
                         type="time"
@@ -248,25 +242,7 @@ const PatientTestsForm = ({
                 )}
               />
             </div>
-            <div className="flex-1">
-              <FormField
-                control={form.control}
-                name="endTime"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Select the End Time</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Enter End Time"
-                        type="time"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+           
           </div>
 
           <FormField

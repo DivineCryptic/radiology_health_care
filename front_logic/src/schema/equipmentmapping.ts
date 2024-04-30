@@ -13,9 +13,10 @@ export const formData = z.object({
     employeeId: z.string(),
 })
 
-const insertEquipmentMappingsParams = EquipmentsMappingData.omit({ id: true });
+export const insertEquipmentMappingsParams = EquipmentsMappingData.omit({ id: true });
 
 export type EquipmentsMappingData = z.infer<typeof EquipmentsMappingData>
+export type InsertEquipmentMappingsParams = z.infer<typeof insertEquipmentMappingsParams>
 
 export type EquipmentsMappingform = z.infer<typeof formData>
 

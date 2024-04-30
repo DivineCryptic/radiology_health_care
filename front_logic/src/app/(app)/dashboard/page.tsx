@@ -5,16 +5,20 @@ import { getPatients } from "@/server_actions/(get-requests)/getPatients";
 import { getChildTestCategories } from "@/server_actions/(get-requests)/getChildTests";
 import PatientTestsPage from "./patient-tests/page";
 import Dashboard from "./components/dashboard";
-import { PatientTestsData, TransformPatientTestsData } from "@/schema/patient-tests";
+import {
+  PatientTestsData,
+  TransformPatientTestsData,
+} from "@/schema/patient-tests";
 import { getTestCategories } from "@/server_actions/(get-requests)/getTestCategories";
 import { TestCategoryData } from "@/schema/testcategory";
 import { PatientData } from "@/schema/patients";
+import { Dashboard2 } from "./components/dashboard2";
 
 const DashboardsPage = () => {
   return (
-    <div>
+    <>
       <DashboardComponent />
-    </div>
+    </>
   );
 };
 
@@ -40,7 +44,7 @@ const DashboardComponent = async () => {
       patientInfo.name,
     ])
   );
-    const transformPatientTestsData = (
+  const transformPatientTestsData = (
     patientTest: PatientTestsData,
     patientMap: Map<number, string>,
     testMap: Map<number, string>
@@ -61,8 +65,9 @@ const DashboardComponent = async () => {
 
   return (
     <Suspense fallback={<Loading />}>
+      
       <Dashboard  patientTests={transformedPatientTests} patients={patientInfo} tests={childTestsInfo}  />
+      {/* <Dashboard2 /> */}
     </Suspense>
-  )
-
+  );
 };

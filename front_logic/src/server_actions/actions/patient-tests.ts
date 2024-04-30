@@ -1,5 +1,10 @@
 "use server";
 
+import {
+  insertPatientTestsParams,
+  UpdatePatientTestsPriority,
+  UpdatePatientTestStatus,
+} from "@/schema/patient-tests";
 import axios from "axios";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
@@ -20,7 +25,9 @@ const handleErrors = (e: unknown) => {
 
 const revalidatePatientTests = () => revalidatePath("/patient-tests");
 
-export const createPatientTestsAction = async (patientTests: any) => {
+export const createPatientTestsAction = async (
+  patientTests: insertPatientTestsParams
+) => {
   try {
     const response = await axios.post(PatientTestsUrl, patientTests, {
       headers: {
@@ -46,6 +53,50 @@ export const deletePatientTestsAction = async (id: number) => {
     if (response.status === 204) {
       revalidatePatientTests();
       return console.log("Patient Tests deleted successfully");
+    }
+  } catch (e) {
+    return handleErrors(e);
+  }
+};
+
+export const patchPatientTestsStatusAction = async (
+  patientTestStatus: UpdatePatientTestStatus
+) => {
+  try {
+    const response = await axios.patch(
+      PatientTestsUrl + "/" + patientTestStatus.id,
+      patientTestStatus,
+      {
+        headers: {
+          Authorization: bearerToken,
+        },
+      }
+    );
+    if (response.status === 200) {
+      revalidatePatientTests();
+      return console.log("Patient Tests status updated successfully");
+    }
+  } catch (e) {
+    return handleErrors(e);
+  }
+};
+
+export const patchPatientTestPriorityAction = async (
+  patientTestPriority: UpdatePatientTestsPriority
+) => {
+  try {
+    const response = await axios.patch(
+      PatientTestsUrl + "/" + patientTestPriority.id,
+      patientTestPriority,
+      {
+        headers: {
+          Authorization: bearerToken,
+        },
+      }
+    );
+    if (response.status === 200) {
+      revalidatePatientTests();
+      return console.log("Patient Tests priority updated successfully");
     }
   } catch (e) {
     return handleErrors(e);
