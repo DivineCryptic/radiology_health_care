@@ -9,37 +9,74 @@ import { DataTableViewOptions } from "./data-table-view-options";
 
 import { priorities, statuses } from "../data/data";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
-import { useEffect, useState } from "react";
-import { getChildTestCategories } from "@/server_actions/(get-requests)/client/clientside";
-import { TestCategoryData } from "@/schema/testcategory";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import React, { useEffect } from "react";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
 }
 
-
-// const formattedDate = dates ? `${dates.split('-')[2]}/${dates.split('-')[1]}/${dates.split('-')[0]}` : '';
-// const date=new Date();
-// const formattedDate = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
 export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
+  const [date, setDate] = React.useState<Date>();
+
+  useEffect(() => {
+    if (!date) {
+      const today = new Date()
+      
+      setDate(today)
+      const templatedDate = format(today, "yyyy-MM-dd");
+      table.getColumn("startTime")?.setFilterValue(templatedDate);
+    }
+  }, [date]);
 
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         {/* Make this into a filter for date  */}
-        <Input
-          type="date"
-          placeholder="Filter Date..."
-          onChange={(event) => {
-            table.getColumn("startTime")?.setFilterValue(event.target.value);
-            localStorage.setItem("selectedDate", event.target.value);
-          }}
-          className="h-8 w-[150px] lg:w-[250px]"
-        />
+
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant={"outline"}
+              className={cn(
+                "w-[280px] justify-start text-left font-normal",
+                !date && "text-muted-foreground"
+              )}
+            >
+              <CalendarIcon className="mr-2 h-4 w-4" />
+              {date ? format(date, "PPP") : <span>Pick a date</span>}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0">
+            
+            <Calendar
+              mode="single"
+              
+              selected={date}
+              onSelect={(event: any) => {
+                const templatedDate = format(event, "yyyy-MM-dd");
+                setDate(event);
+                console.log(templatedDate)
+                table.getColumn("startTime")?.setFilterValue(templatedDate);
+              }}
+              initialFocus
+            />
+          </PopoverContent>
+        </Popover>
+     
+
         {table.getColumn("status") && (
           <div>
             <DataTableFacetedFilter

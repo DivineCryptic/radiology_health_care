@@ -35,9 +35,7 @@ import { PatientData } from "@/schema/patients";
 
 import { createPatientTestsAction } from "@/server_actions/actions/patient-tests";
 
-const date=new Date();
-const dateString=`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-localStorage.setItem('date', dateString);
+
 const PatientTestsForm = ({
   patients,
   activePatient,
