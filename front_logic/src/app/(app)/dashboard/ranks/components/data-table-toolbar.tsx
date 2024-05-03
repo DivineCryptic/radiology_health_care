@@ -16,7 +16,8 @@ interface DataTableToolbarProps<TData> {
    
   }:DataTableToolbarProps<TData>){
     const isFiltered = table.getState().columnFilters.length > 0;
-
+    const div=table.getColumn("division")
+    console.log(div);
     return(
         <div className="flex items-center justify-between">
         <div className="flex flex-1 items-center space-x-2">
@@ -41,6 +42,7 @@ interface DataTableToolbarProps<TData> {
             />
         
         )}
+        
 
         {isFiltered && (
           <Button
