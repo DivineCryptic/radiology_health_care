@@ -25,10 +25,16 @@ export const columns: ColumnDef<TransformRankData>[] = [
     },
   },
   { accessorKey: "name", header: "Name" },
+  {accessorKey:"shortname",header:"Short Name"},
+  {accessorKey:"division",header:"Division"},
+  
   {
     accessorKey: "empServiceName",
     header: "Rank Service",
-  },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
+   },
   {
     accessorKey: "actions",
     header: () => (

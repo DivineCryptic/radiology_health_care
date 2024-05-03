@@ -9,15 +9,25 @@ import {
 import { RankData } from "@/schema/ranks";
 import {
   ColumnDef,
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
   flexRender,
   getCoreRowModel,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
+  getFilteredRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { TOpenModal } from "./RankList";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import { DataTablePagination } from "@/modules/shared/data-table-pagination";
+import { DataTableToolbar } from "./data-table-toolbar";
+import React, { useState } from "react";
+import NameFilter from "./name-filter";
 
 interface DataTableProps<TData, TValues> {
   columns: ColumnDef<TData, TValues>[];
@@ -30,15 +40,38 @@ export function DataTable<TData, TValues>({
   data,
   openModal,
 }: DataTableProps<TData, TValues>) {
+  const [rowSelection, setRowSelection] = React.useState({});
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({});
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  );
+  const [sorting, setSorting] = React.useState<SortingState>([]);
   const table = useReactTable({
     data,
     columns,
-    getPaginationRowModel: getPaginationRowModel(),
+    state: {
+      sorting,
+      columnVisibility,
+      rowSelection,
+      columnFilters,
+    },
+    enableRowSelection: true,
+    onRowSelectionChange: setRowSelection,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFacetedRowModel: getFacetedRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
   });
 
   return (
-    <div>
+    <div className="space-y-4">
+      <DataTableToolbar table={table}/>
       <div className="rounded-md border">
         <Table>
           <TableHeader>

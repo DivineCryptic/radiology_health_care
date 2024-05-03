@@ -21,9 +21,6 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "@/components/ui/command";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Calendar, CreditCard, Settings, Smile, User } from "lucide-react";
 
 interface DataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>;
@@ -31,17 +28,18 @@ interface DataTableFacetedFilterProps<TData, TValue> {
   options: {
     label: string;
     value: string;
-    icon?: React.ComponentType<{ className?: string }>;
   }[];
 }
 
-export function DataTableFacetedFilter<TData, TValue>({
+export function DataTableFacetedFilter<TData, Tvalue>({
   column,
   title,
   options,
-}: DataTableFacetedFilterProps<TData, TValue>) {
+}: DataTableFacetedFilterProps<TData, Tvalue>) {
   const facets = column?.getFacetedUniqueValues();
   const selectedValues = new Set(column?.getFilterValue() as string[]);
+  console.log(selectedValues);
+// console.log(column?.getFilterValue())
   return (
     <div>
       <Popover>
@@ -84,11 +82,11 @@ export function DataTableFacetedFilter<TData, TValue>({
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[200px] p-0 " align="start">
+        <PopoverContent className="w-[200px] p-0" align="start">
           <Command>
-            <CommandInput placeholder={title} />
+          <CommandInput placeholder={title} />
             <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
+              <CommandEmpty> No results found</CommandEmpty>
               <CommandGroup>
                 {options.map((option) => {
                   const isSelected = selectedValues.has(option.value);
@@ -117,9 +115,6 @@ export function DataTableFacetedFilter<TData, TValue>({
                       >
                         <CheckIcon className={cn("h-4 w-4")} />
                       </div>
-                      {option.icon && (
-                        <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-                      )}
                       <span>{option.label}</span>
                       {facets?.get(option.value) && (
                         <span className="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
