@@ -25,7 +25,7 @@ export const columns: ColumnDef<TransformRankData>[] = [
     },
   },
   { accessorKey: "name", header: "Name" },
-  {accessorKey:"shortname",header:"Short Name"},
+  {accessorKey:"shortName",header:"Short Name"},
   {accessorKey:"division",header:"Division"},
   
   {
