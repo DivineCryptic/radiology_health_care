@@ -1,34 +1,40 @@
-import React, { Suspense } from "react";
-import { getPatientTests } from "@/server_actions/(get-requests)/getPatientTests";
 import Loading from "@/app/loading";
+import { getPatientTests } from "@/server_actions/(get-requests)/getPatientTests";
+import React, { Suspense } from "react";
+import PatientTestsList from "./components/PatientTestsList";
 import { getPatients } from "@/server_actions/(get-requests)/getPatients";
-import { getChildTestCategories } from "@/server_actions/(get-requests)/getChildTests";
-
+import { getTestCategories } from "@/server_actions/(get-requests)/getTestCategories";
+import { TestCategoryData } from "@/schema/testcategory";
+import { PatientData } from "@/schema/patients";
 import {
   PatientTestsData,
   TransformPatientTestsData,
 } from "@/schema/patient-tests";
-import { getTestCategories } from "@/server_actions/(get-requests)/getTestCategories";
-import { TestCategoryData } from "@/schema/testcategory";
-import { PatientData } from "@/schema/patients";
-import Dashboard from "@/components/dashboard";
+import { getChildTestCategories } from "@/server_actions/(get-requests)/getChildTests";
 
-const AdminDashboardsPage = () => {
+const PatientTestsPage = () => {
   return (
-    <>
-      <DashboardComponent />
-    </>
+    <main>
+      <div className="relative">
+        <div className="flex justify-between">
+          <h1 className="font-semibold text-2xl my-2">Patient Tests</h1>
+        </div>
+        <PatientTests />
+      </div>
+    </main>
   );
 };
 
-export default AdminDashboardsPage;
+export default PatientTestsPage;
 
-const DashboardComponent = async () => {
-  const patientTestsInfo = await getPatientTests();
+const PatientTests = async () => {
 
-  const patientInfo = await getPatients();
-  const testsInfo = await getTestCategories();
-  const childTestsInfo = await getChildTestCategories();
+
+  const patientTestsInfo: PatientTestsData[] = await getPatientTests();
+
+  const patientInfo: PatientData[] = await getPatients();
+  const testsInfo: TestCategoryData[] = await getTestCategories();
+  const childTestsInfo: TestCategoryData[] = await getChildTestCategories();
 
   const testMap = new Map<number, string>(
     testsInfo.map((testinfo: TestCategoryData) => [
@@ -43,6 +49,7 @@ const DashboardComponent = async () => {
       patientInfo.name,
     ])
   );
+
   const transformPatientTestsData = (
     patientTest: PatientTestsData,
     patientMap: Map<number, string>,
@@ -61,11 +68,10 @@ const DashboardComponent = async () => {
     patientTestsInfo.map((patientTest: PatientTestsData) =>
       transformPatientTestsData(patientTest, patientMap, testMap)
     );
-
   return (
     <Suspense fallback={<Loading />}>
-      
-      <Dashboard  patientTests={transformedPatientTests} patients={patientInfo} tests={childTestsInfo}  />
+
+      <PatientTestsList patientTests={transformedPatientTests} patients={patientInfo} tests={childTestsInfo}  />
     </Suspense>
   );
 };

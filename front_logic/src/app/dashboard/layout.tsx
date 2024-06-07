@@ -1,14 +1,16 @@
 import { Navbar } from "@/modules/navigation/Navbar";
 
 interface LayoutProps {
-  children: React.ReactNode;
+  patient: React.ReactNode;
   admin: React.ReactNode;
 }
 
-export default function Layout({ children, admin }: LayoutProps) {
+export default function Layout({ patient, admin }: LayoutProps) {
+  const isAdmin = true;
+
   return (
     <div lang="en">
-<Navbar children={children} user="admin" />
+      {isAdmin ? <Navbar children={admin} user="admin" /> : <>{patient}</>}
     </div>
   );
 }

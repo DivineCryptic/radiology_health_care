@@ -28,8 +28,9 @@ const PatientTestsData = z.object({
   patientInfoId: z.number(),
   testCategoriesId: z.number(),
   startTime: z.date(),
-  endTime : z.date()
- 
+  endTime : z.date(),
+  recommendedDoctor: z.string(),
+  
 })
 
 const PatientTestsDataForm = z.object({
@@ -41,7 +42,7 @@ const PatientTestsDataForm = z.object({
   patientInfoId: z.number(),
   testCategoriesId: z.number(),
   startTime: z.date(),
- 
+  recommendedDoctor : z.string(),
 });
 
 export const formData = z.object({
@@ -52,7 +53,8 @@ export const formData = z.object({
   patientInfoId: z.string(),
   testCategoriesId: z.string(),
   startTime: z.string(),
- 
+  recommendedDoctor : z.string(),
+
 });
 
 
@@ -68,6 +70,7 @@ export type TransformPatientTestsData = {
   endTime: Date;
   patientName: string;
   testName: string;
+  recommendedDoctor: string;
 }
 
 export const TransformedPatientTests = z.object({
@@ -82,6 +85,7 @@ export const TransformedPatientTests = z.object({
   endTime : z.string(),
   patientName: z.string(),
   testName: z.string(),
+  recommendedDoctor: z.string(),
 });
 const insertPatientTestsParams = PatientTestsDataForm.omit({ id: true });
 
@@ -108,12 +112,22 @@ const updatePatientTestStartTime = z.object({
   testCategoriesId: z.number(),
 })
 
+const addPatientReport = z.object({
+  id : z.number(),
+  patientInfoId: z.number(),
+  testCategoriesId: z.number(),
+  patientReport: z.string(),
+} )
+
+
+//mutation , and additions for patient tests for the route patient-test-timings
 export type UpdatePatientTestStartTime = z.infer<typeof updatePatientTestStartTime>
-
-
 export type UpdatePatientTestsPriority = z.infer<typeof updatePatientTestsPriority>
 export type UpdatePatientTestStatus = z.infer<typeof updatePatientTestStatus>;
 export type insertPatientTestsParams = z.infer<typeof insertPatientTestsParams>;
+export type AddPatientReport = z.infer<typeof addPatientReport>;
+
+
 
 export type PatientTestsform = z.infer<typeof formData>;
 export type PatientTestsData = z.infer<typeof PatientTestsData>;

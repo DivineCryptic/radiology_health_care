@@ -36,6 +36,7 @@ export const createEquipmentAction = async (
   
       return console.log("Equipment added successfully");
     }
+    console.log(response.data);
   } catch (e) {
     return handleErrors(e);
   }

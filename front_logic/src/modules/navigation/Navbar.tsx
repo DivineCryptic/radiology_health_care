@@ -1,28 +1,13 @@
 "use client";
 import Link from "next/link";
 import {
-  Bell,
   CircleUser,
-  Home,
-  LineChart,
   Menu,
-  Package,
   BriefcaseMedical,
-  Search,
-  ShoppingCart,
-  Users,
+ 
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-
-import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,7 +16,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 import { LucideIcon } from "lucide-react";

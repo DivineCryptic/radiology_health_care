@@ -63,7 +63,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import Link from "next/link";
-import PatientTestsList from "@/app/dashboard/patient-tests/components/PatientTestsList";
+import PatientTestsList from "@/app/dashboard/@admin/patient-tests/components/PatientTestsList";
 
 function Dashboard({
   patientTests,
