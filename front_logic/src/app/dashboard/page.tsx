@@ -3,8 +3,6 @@ import { getPatientTests } from "@/server_actions/(get-requests)/getPatientTests
 import Loading from "@/app/loading";
 import { getPatients } from "@/server_actions/(get-requests)/getPatients";
 import { getChildTestCategories } from "@/server_actions/(get-requests)/getChildTests";
-import PatientTestsPage from "./patient-tests/page";
-import Dashboard from "./components/dashboard";
 import {
   PatientTestsData,
   TransformPatientTestsData,
@@ -12,7 +10,7 @@ import {
 import { getTestCategories } from "@/server_actions/(get-requests)/getTestCategories";
 import { TestCategoryData } from "@/schema/testcategory";
 import { PatientData } from "@/schema/patients";
-import { Dashboard2 } from "./components/dashboard2";
+import Dashboard from "@/components/dashboard";
 
 const DashboardsPage = () => {
   return (

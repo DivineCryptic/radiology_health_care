@@ -48,7 +48,6 @@ import {
 } from "@/components/ui/pagination";
 import { Separator } from "@/components/ui/separator";
 import { Progress } from "@/components/ui/progress";
-import PatientTestsList from "../patient-tests/components/PatientTestsList";
 import { useState } from "react";
 import { TransformPatientTestsData } from "@/schema/patient-tests";
 import { TestCategoryData } from "@/schema/testcategory";
@@ -64,6 +63,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import Link from "next/link";
+import PatientTestsList from "@/app/dashboard/patient-tests/components/PatientTestsList";
 
 function Dashboard({
   patientTests,

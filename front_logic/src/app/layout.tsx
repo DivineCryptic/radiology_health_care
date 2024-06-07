@@ -13,13 +13,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+  admin,
+}: {
   children: React.ReactNode;
-}>) {
+  admin: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main>{children}</main>
+        {false ? <Navbar children={admin} user={"admin"} /> : children}
+
         <Toaster />
       </body>
     </html>

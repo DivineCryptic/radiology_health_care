@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Modal from "../../../../../modules/shared/Modal";
+import Modal from "../../../../modules/shared/Modal";
 
 import { Button } from "@/components/ui/button";
 import { PatientTestsData } from "@/schema/patient-tests";

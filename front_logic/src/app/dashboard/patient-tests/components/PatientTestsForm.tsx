@@ -22,7 +22,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { useForm } from "react-hook-form";
-import { useBackPath } from "../../../../../modules/shared/BackButton";
+import { useBackPath } from "../../../../modules/shared/BackButton";
 import { DialogClose } from "@/components/ui/dialog";
 import {
   formData,

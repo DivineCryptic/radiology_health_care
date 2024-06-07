@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import Modal from "../../../../../modules/shared/Modal";
+import Modal from "../../../../modules/shared/Modal";
 
 import { Button } from "@/components/ui/button";
 import { PatientTestsData, TransformPatientTestsData,  } from "@/schema/patient-tests";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import PatientTestsForm from "./PatientTestsForm";
-import ButtonModal from "../../../../../modules/shared/ButtonModal";
+import ButtonModal from "../../../../modules/shared/ButtonModal";
 import { TestCategoryData } from "@/schema/testcategory";
 import { PatientData } from "@/schema/patients";
 
