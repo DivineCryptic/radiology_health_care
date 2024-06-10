@@ -1,13 +1,8 @@
 "use client";
-
-import { Button } from "@/components/ui/button";
-import DropDown from "@/modules/shared/DropDown";
-import { EditButton } from "@/modules/shared/EditButton";
-import { Pathname } from "@/modules/shared/Pathname";
-import { PatientTestsData } from "@/schema/patient-tests";
 import { TestCategoryData } from "@/schema/testcategory";
 import { deleteTestCategoryAction } from "@/server_actions/actions/testcategory";
 import { ColumnDef } from "@tanstack/react-table";
+import { DataTableRowActions } from "./data-table-row-actions";
 // import Link from "next/link";
 // import { usePathname } from "next/navigation";
 
@@ -36,35 +31,89 @@ export const columns: ColumnDef<TestCategoryData>[] = [
     header: "Test Duration",
   },
   {
-    accessorKey: "actions",
-    header: "Actions",
+    accessorKey: "patientReport",
+    header: "Report Template Set or not",
     cell: ({ row }) => {
-      // const pathname = usePathname();
-      // const basePath = pathname.includes("patient-tests")
-      //   ? pathname
-      //   : pathname + "/patient-tests/";
-      const basepath = Pathname({ prop: "test-categories" });
-      const testcategory = row.original;
+      const templateditEligibility = row.original.parentTestCategoryId;
+      const templateReportTobefilled = row.original.patientReport;
+
+      // if(!templateditEligibility) {
+      //   return(
+      //     <div>No Parent ID so it cannot be filled</div>
+      //   )
+      // }
+      // if (templateditEligibility && templateReportTobefilled) {
+      //   const isSet = false
+      //   return(
+      //     <div>Yes</div>
+      //   )
+      // }
+      // if (templateditEligibility && !templateReportTobefilled) {
+      //   return(
+      //     <div>No</div>
+      //   )
+      // }
 
       return (
-        <div>
-          {/* <Button variant={"link"} asChild>
-                          <Link href={basePath + "/" + patientTests.id}>Edit</Link> 
-                      </Button> */}
-          <DropDown
-            name={{ id: testcategory.id }}
-            deletefunc={deleteTestCategoryAction}
-            basepath={basepath}
-          />
-          {/* <EditButton prop={{id:testcategory.id}} basePath={basepath}/>
-                      <Button 
-                          onClick={() => deleteTestCategoryAction(testcategory.id)}
-                          variant={"destructive"}
-                      >
-                          Delete
-                      </Button> */}
+        <div className="flex justify-center">
+          {templateditEligibility ? (
+            templateReportTobefilled ? (
+              <div>Yes (Edit)</div>
+            ) : (
+              <div>No (Add)</div>
+            )
+          ) : (
+            <div>No Parent ID so it cannot be filled</div>
+          )}
         </div>
       );
     },
   },
+  {
+    accessorKey: "actions",
+    header: () => (
+      <div className="flex justify-center">
+        <h1>Actions</h1>
+      </div>
+    ),
+    cell: ({ row }) => {
+      return (
+        <div>
+          <DataTableRowActions row={row} />
+        </div>
+      );
+    },
+  },
+  // {
+  //   accessorKey: "actions",
+  //   header: "Actions",
+  //   cell: ({ row }) => {
+  //     // const pathname = usePathname();
+  //     // const basePath = pathname.includes("patient-tests")
+  //     //   ? pathname
+  //     //   : pathname + "/patient-tests/";
+  //     const basepath = Pathname({ prop: "test-categories" });
+  //     const testcategory = row.original;
+
+  //     return (
+  //       <div>
+  //         {/* <Button variant={"link"} asChild>
+  //                         <Link href={basePath + "/" + patientTests.id}>Edit</Link>
+  //                     </Button> */}
+  //         <DropDown
+  //           name={{ id: testcategory.id }}
+  //           deletefunc={deleteTestCategoryAction}
+  //           basepath={basepath}
+  //         />
+  //         {/* <EditButton prop={{id:testcategory.id}} basePath={basepath}/>
+  //                     <Button
+  //                         onClick={() => deleteTestCategoryAction(testcategory.id)}
+  //                         variant={"destructive"}
+  //                     >
+  //                         Delete
+  //                     </Button> */}
+  //       </div>
+  //     );
+  //   },
+  // },
 ];

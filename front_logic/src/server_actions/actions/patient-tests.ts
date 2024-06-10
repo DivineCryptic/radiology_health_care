@@ -117,11 +117,31 @@ export const patchPatientTestsStartTime = async (
         },
       }
     );
+    // if (response.status === 200) {
+    //   revalidatePatientTests();
+    //   return new Promise((resolve) => {
+    //     setTimeout(() => {
+    //       resolve("success");
+    //     }, 5000); // Delay of 5 seconds …
+    // }
+
     if (response.status === 200) {
       revalidatePatientTests();
-      return console.log("Patient Tests start time updated successfully");
+
+      return 'success'
     }
+    // return new Promise((resolve) => {
+    //   setTimeout(() => {
+    //     if (response.status === 200) {
+    //       // revalidateTestCategory();
+    //       revalidatePatientTests();
+    //       return "success";
+    //     } else {
+    //       return "error";
+    //     }
+    //   }, 5000); // Delay of 5 seconds
+    // });
   } catch (e) {
     return handleErrors(e);
   }
-}
+};
