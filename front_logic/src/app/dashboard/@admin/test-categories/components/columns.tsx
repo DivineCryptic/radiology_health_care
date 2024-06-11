@@ -32,7 +32,9 @@ export const columns: ColumnDef<TestCategoryData>[] = [
   },
   {
     accessorKey: "patientReport",
-    header: "Report Template Set or not",
+    header: () => (
+      <div className="flex justify-center">Report Template Set or not</div>
+    ),
     cell: ({ row }) => {
       const templateditEligibility = row.original.parentTestCategoryId;
       const templateReportTobefilled = row.original.patientReport;

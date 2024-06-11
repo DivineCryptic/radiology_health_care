@@ -37,6 +37,7 @@ export function DataTableRowActions<TData>({
         open={openReportTemplateEditor}
         setOpen={setOpenReportTemplateEditor}
         title={templateReportTobefilled ? "Edit" : "Add"}
+        className="max-w-[700px]"
       >
         <TemplateAdd id={testRow.id} reportTemplate={nullConvert} />
       </Modal>

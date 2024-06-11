@@ -28,18 +28,18 @@ import { DataTablePagination } from "@/modules/shared/data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
-import { PatientTestsData } from "@/schema/patient-tests";
+import {  PatientTestsParams } from "@/schema/patient-tests";
 import { TOpenModal } from "./PatientTestsList";
 import { CommandDemo } from "./command";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  openModal: (patientTests?: PatientTestsData) => void;
+  openModal: (patientTests?: PatientTestsParams) => void;
 }
 
 export function DataTable<TData, TValue>({
-  columns,
+columns,
   data,
   openModal,
 }: DataTableProps<TData, TValue>) {

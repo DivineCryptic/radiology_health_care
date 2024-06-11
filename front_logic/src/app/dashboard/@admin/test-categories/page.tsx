@@ -12,7 +12,6 @@ export default async function TestCategoryPage() {
         <div className="flex justify-between">
           <h1 className="font-semibold text-2xl my-2">Test Categories</h1>
         </div>
-        Hello
         <TestCategories />
       </div>
     </main>

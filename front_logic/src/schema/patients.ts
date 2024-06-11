@@ -1,16 +1,5 @@
 import {z } from "zod";
-// {
-//     "id": 0,
-//     "name": "string",
-//     "age": 0,
-//     "gender": "string",
-//     "dateOfBirth": "string",
-//     "mobile": 0,
-//     "relation": "string",
-//     "employeeIdId": 0,
-//     "employeeHisNoId": "string",
-//     "employeeServiceNoId": "string"
-//   }
+
 
 const PatientData = z.object({
     id: z.number(),

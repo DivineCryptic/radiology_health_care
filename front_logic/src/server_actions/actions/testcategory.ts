@@ -128,7 +128,7 @@ export const patchTestChildReport = async (
         } else {
           resolve("error");
         }
-      }, 5000); // Delay of 2 seconds
+      }, 2000); // Delay of 2 seconds
     });
   } catch (e) {
     return handleErrors(e);

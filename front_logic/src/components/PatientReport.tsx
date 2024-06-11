@@ -16,17 +16,13 @@ import { useFormStatus } from "react-dom";
 import { useForm } from "react-hook-form";
 import { useToast } from "./ui/use-toast";
 import RichTextEditor from "./texteditor";
+import { patchIndividualReport } from "@/server_actions/actions/patient-tests";
+import { AddPatientReport } from "@/schema/patient-tests";
 
-const TemplateAdd = ({
-  id,
-  reportTemplate,
-}: {
-  id: number;
-  reportTemplate: string ;
-}) => {
-  const form = useForm<UpdateReportTemplate>({
+const PatientReport = ({report}:{ report: AddPatientReport}) => {
+  const form = useForm<AddPatientReport>({
     defaultValues: {
-      patientReport: reportTemplate,
+      patientReport: report.patientReport,
     },
   });
 
@@ -40,14 +36,16 @@ const TemplateAdd = ({
     });
   };
 
-  const handleSubmit = async (data: UpdateReportTemplate) => {
+  const handleSubmit = async (data: AddPatientReport) => {
     try {
       const payload = {
-        id: id,
-        patientReport: data.patientReport,
+        id: report.id,
+        patientReport: data.patientReport ,
+        patientInfoId: report.patientInfoId,
+        testCategoriesId : report.testCategoriesId
       };
       console.log(payload);
-      const response = await patchTestChildReport(payload);
+      const response = await patchIndividualReport(payload);
 
       if (response === "success") {
         handleSubmitToast();
@@ -91,7 +89,7 @@ const TemplateAdd = ({
   );
 };
 
-export default TemplateAdd;
+export default PatientReport;
 
 const Submit = () => {
   const { pending } = useFormStatus();

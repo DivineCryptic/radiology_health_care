@@ -1,6 +1,7 @@
 "use server";
 
 import {
+  AddPatientReport,
   insertPatientTestsParams,
   UpdatePatientTestsPriority,
   UpdatePatientTestStartTime,
@@ -104,6 +105,26 @@ export const patchPatientTestPriorityAction = async (
   }
 };
 
+export const patchIndividualReport = async (
+  patientReport: AddPatientReport
+) => {
+  try {
+    const response = await axios.patch(
+      PatientTestsUrl + "/" + patientReport.id,
+      patientReport,
+      {
+        headers: {
+          Authorization: bearerToken,
+        },
+      }
+    );
+    if (response.status === 200) {
+      revalidatePatientTests();
+      return "success";
+    }
+  } catch (error) {}
+};
+
 export const patchPatientTestsStartTime = async (
   patientTestStartTime: UpdatePatientTestStartTime
 ) => {
@@ -117,30 +138,12 @@ export const patchPatientTestsStartTime = async (
         },
       }
     );
-    // if (response.status === 200) {
-    //   revalidatePatientTests();
-    //   return new Promise((resolve) => {
-    //     setTimeout(() => {
-    //       resolve("success");
-    //     }, 5000); // Delay of 5 seconds …
-    // }
 
     if (response.status === 200) {
       revalidatePatientTests();
 
-      return 'success'
+      return "success";
     }
-    // return new Promise((resolve) => {
-    //   setTimeout(() => {
-    //     if (response.status === 200) {
-    //       // revalidateTestCategory();
-    //       revalidatePatientTests();
-    //       return "success";
-    //     } else {
-    //       return "error";
-    //     }
-    //   }, 5000); // Delay of 5 seconds
-    // });
   } catch (e) {
     return handleErrors(e);
   }

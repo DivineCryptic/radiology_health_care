@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { PatientTestsData, TransformPatientTestsData,  } from "@/schema/patient-tests";
+import { PatientTestsData, PatientTestsParams, TransformPatientTestsData,  } from "@/schema/patient-tests";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import PatientTestsForm from "./PatientTestsForm";
@@ -18,7 +18,7 @@ export default function PatientTestsList({
   tests,
   patients,
 }: {
-  patientTests: TransformPatientTestsData[];
+  patientTests: PatientTestsParams[];
   tests: TestCategoryData[];
   patients: PatientData[];
 

@@ -5,7 +5,7 @@ import { DataTableColumnHeader } from "@/modules/shared/data-table-header-column
 import DropDown from "@/modules/shared/DropDown";
 import { EditButton } from "@/modules/shared/EditButton";
 import { Pathname } from "@/modules/shared/Pathname";
-import { PatientTestsData } from "@/schema/patient-tests";
+import { PatientTestsData, PatientTestsParams } from "@/schema/patient-tests";
 import { deletePatientTestsAction } from "@/server_actions/actions/patient-tests";
 import { ColumnDef } from "@tanstack/react-table";
 import { priorities, statuses } from "../data/data";
@@ -13,7 +13,7 @@ import { DataTableRowActions } from "./data-table-row-actions";
 // import Link from "next/link";
 // import { usePathname } from "next/navigation";
 
-export const columns: ColumnDef<PatientTestsData>[] = [
+export const columns: ColumnDef<PatientTestsParams>[] = [
   {
     accessorKey: "id",
     header: ({ column }) => (
