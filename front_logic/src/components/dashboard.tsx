@@ -64,6 +64,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import Link from "next/link";
 import PatientTestsList from "@/app/dashboard/@admin/patient-tests/components/PatientTestsList";
+import PdfFunction from "./PdfFunction";
 
 function Dashboard({
   patientTests,
@@ -101,6 +102,7 @@ function Dashboard({
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
               <Card className="sm:col-span-2">
                 <CardHeader className="pb-3">
+                  {/* <PdfFunction /> */}
                   <CardTitle>Add New Patients</CardTitle>
                   <CardDescription className="max-w-lg text-balance leading-relaxed">
                     To add patients ,click on the button

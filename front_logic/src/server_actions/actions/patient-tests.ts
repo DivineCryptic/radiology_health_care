@@ -2,6 +2,8 @@
 
 import {
   AddPatientReport,
+  EditClinicalNote,
+  EditSpecialInstruction,
   insertPatientTestsParams,
   UpdatePatientTestsPriority,
   UpdatePatientTestStartTime,
@@ -26,6 +28,8 @@ const handleErrors = (e: unknown) => {
 };
 
 const revalidatePatientTests = () => revalidatePath("/patient-tests");
+const revalidateIndividualReportPage = (id: number) =>
+  revalidatePath(`/patient-tests/${id}`);
 
 export const createPatientTestsAction = async (
   patientTests: insertPatientTestsParams
@@ -97,7 +101,8 @@ export const patchPatientTestPriorityAction = async (
       }
     );
     if (response.status === 200) {
-      revalidatePatientTests();
+      revalidateIndividualReportPage(patientTestPriority.id);
+
       return console.log("Patient Tests priority updated successfully");
     }
   } catch (e) {
@@ -142,6 +147,48 @@ export const patchPatientTestsStartTime = async (
     if (response.status === 200) {
       revalidatePatientTests();
 
+      return "success";
+    }
+  } catch (e) {
+    return handleErrors(e);
+  }
+};
+
+export const patchSpecialInstruction = async (
+  payload: EditSpecialInstruction
+) => {
+  try {
+    const response = await axios.patch(
+      PatientTestsUrl + "/" + payload.id,
+      payload,
+      {
+        headers: {
+          Authorization: bearerToken,
+        },
+      }
+    );
+    if (response.status === 200) {
+      revalidateIndividualReportPage(payload.id)
+      return "success";
+    }
+  } catch (e) {
+    return handleErrors(e);
+  }
+};
+
+export const patchClinicalNotes = async (payload: EditClinicalNote) => {
+  try {
+    const response = await axios.patch(
+      PatientTestsUrl + "/" + payload.id,
+      payload,
+      {
+        headers: {
+          Authorization: bearerToken,
+        },
+      }
+    );
+    if (response.status === 200) {
+      revalidateIndividualReportPage(payload.id)
       return "success";
     }
   } catch (e) {

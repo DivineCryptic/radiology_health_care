@@ -42,8 +42,9 @@ const RichTextEditor = ({
     content: value, // Set the initial content with the provided value
     onUpdate: ({ editor }) => {
     //   onChange(editor.getText());
+    onChange(editor.getText())
     //   onChange(editor.view.dom.innerHTML);
-      onChange(editor.getHTML()); // Call the onChange callback with the updated HTML content
+      // onChange(editor.getHTML()); // Call the onChange callback with the updated HTML content
     },
   });
 

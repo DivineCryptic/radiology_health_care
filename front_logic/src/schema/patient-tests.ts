@@ -82,7 +82,7 @@ export const TransformedPatientTests = z.object({
   endTime: z.string(),
   patientName: z.string(),
   testName: z.string(),
-  recommendedDoctor: z.string(),
+  recommendedDoctor: z.string().nullable(),
 });
 const insertPatientTestsParams = PatientTestsDataForm.omit({
   id: true,
@@ -121,6 +121,19 @@ const addPatientReport = z.object({
   patientReport: z.string(),
 });
 
+const editSpecialInstruction = z.object({
+  id: z.number(),
+  spclInstruction: z.string(),
+  testCategoriesId: z.number(),
+  patientInfoId: z.number(),
+}) 
+
+const editClinicalNote = z.object({
+  id: z.number(),
+  clinicalNote: z.string(),
+  testCategoriesId: z.number(),
+  patientInfoId: z.number(),
+})
 
 export type PatientTestsParams = z.infer<typeof dataTableParams>;
 
@@ -138,6 +151,8 @@ export type AddPatientReport = z.infer<typeof addPatientReport>;
 export type PatientTestsform = z.infer<typeof formData>;
 export type PatientTestsData = z.infer<typeof PatientTestsData>;
 export type PatientTestsDataForm = z.infer<typeof PatientTestsDataForm>;
+export type EditSpecialInstruction = z.infer<typeof editSpecialInstruction>;
+export type EditClinicalNote = z.infer<typeof editClinicalNote>;
 
 export interface IndividualPatientPageData {
   //patient info

@@ -5,6 +5,8 @@ export function middleware(request: NextRequest) {
   // console.log(request.url)
   const path = request.nextUrl.pathname;
 
+  const isRootPath = path === "/";
+
   const isPublicPath = path === "/auth";
   const isTokenPresent = request.cookies.has("authToken");
   const token = request.cookies.get("authToken")?.value || "";
@@ -17,6 +19,12 @@ export function middleware(request: NextRequest) {
 
   if (!isPublicPath && !token) {
     return NextResponse.redirect(new URL("/auth", request.nextUrl));
+  }
+  if (isRootPath && !isTokenPresent) {
+    return NextResponse.redirect(new URL("/auth", request.nextUrl));
+  }
+  if (isRootPath && isTokenPresent) {
+    return NextResponse.redirect(new URL("/dashboard", request.nextUrl));
   }
 }
 

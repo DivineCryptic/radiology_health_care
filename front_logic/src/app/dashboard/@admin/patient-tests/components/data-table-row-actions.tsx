@@ -79,7 +79,7 @@ export function DataTableRowActions<TData>({
             Reschedule
           </DropdownMenuItem>
           <Link href={editpathcheck}>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <DropdownMenuItem>View</DropdownMenuItem>
           </Link>
           <DropdownMenuItem>Favorite</DropdownMenuItem>
           <DropdownMenuSeparator />

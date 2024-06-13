@@ -10,7 +10,7 @@ export default function Layout({ patient, admin }: LayoutProps) {
 
   return (
     <div lang="en">
-      {isAdmin ? <Navbar children={patient} user="patient" /> : <>{patient}</>}
+      {isAdmin ? <Navbar children={admin}/> : <>{patient}</>}
     </div>
   );
 }

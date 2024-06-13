@@ -50,7 +50,9 @@ const IndividualPatientTests = async ({
 
   const equipmentId = testTemplate.equipmentId;
 
-  const equipmentInfo:EquipmentsData = await getIndividualEquipment(equipmentId);
+  const equipmentInfo: EquipmentsData = await getIndividualEquipment(
+    equipmentId
+  );
 
   const pageData: IndividualPatientPageData = {
     patientInfoId: patientInfo.id,
